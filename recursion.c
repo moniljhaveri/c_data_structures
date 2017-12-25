@@ -1,6 +1,9 @@
 #include <stdio.h> 
+#include <stdlib.h> 
 void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr);
 void sort(int *arr, int val, int n, int size);
+void Binary(int n);
+char *A; 
 
 void problem1(int n){
     //recursive problem 1
@@ -24,7 +27,25 @@ void problem2(int n){
         B[i] = i;
     }
     sort(A, *(A), 0, n);
+    sort(B, *(B), 0, n);
 }
+
+void problem3(int n){
+    A = (char*)malloc(sizeof(char)*n); 
+    Binary(n);
+}
+
+void Binary(int n){
+    if(n == 0){
+        printf("%s\n", A); 
+        return;
+    }
+    A[n-1] = '0'; 
+    Binary(n-1);
+    A[n-1] = '1'; 
+    Binary(n-1);
+}
+
 void sort(int *arr, int val, int n, int size){
     if(n == size){
         printf("In order\n");
@@ -51,8 +72,9 @@ void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr){
     towerOfHanoi(n-1, auxArr, destArr, sourceArr); 
 
 }
+
 int main(){
-    problem2(4); 
+    problem3(16);
 
     return 0; 
 }
