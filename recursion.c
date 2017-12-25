@@ -3,6 +3,7 @@
 void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr);
 void sort(int *arr, int val, int n, int size);
 void Binary(int n);
+void k_string(int n, int k);
 char *A; 
 
 void problem1(int n){
@@ -35,7 +36,31 @@ void problem3(int n){
     Binary(n);
 }
 
+void problem4(int n, int k){
+    A = (char*)malloc(sizeof(char)*n); 
+    k_string(n, k); 
+
+} 
+
+void k_string(int n, int k){
+    if(n < 1){
+        printf("%s\n", A); 
+        return;
+    }
+    int i; 
+    for(i = 0; i < k; i++){
+        A[n-1] = i + 65;
+        k_string(n-1, k); 
+    }
+
+}
+
+
 void Binary(int n){
+    // This is the function to find all binary strings 
+    // The big O of this function is I think  2*T(n - 1)
+    // That equals O(2^n) %need to figure this out 
+
     if(n == 0){
         printf("%s\n", A); 
         return;
@@ -74,7 +99,7 @@ void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr){
 }
 
 int main(){
-    problem3(16);
+    problem4(3, 26);
 
     return 0; 
 }
