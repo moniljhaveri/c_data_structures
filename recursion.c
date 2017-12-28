@@ -10,6 +10,7 @@ void k_string(int n, int k);
 int findMax(int **intArr, bool **boolArr, int r, int c);
 int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr);
 int *convertToArr(int number);
+int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_c, int bound_r);
 char *A;
 
 void problem1(int n)
@@ -107,6 +108,11 @@ int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr)
         boolArr[r][c] = false;
     }
     return 1;
+}
+int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_c, int bound_r)
+{
+
+    return 0;
 }
 
 int *convertToArr(int number)
