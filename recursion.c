@@ -7,6 +7,8 @@ void Binary(int n);
 void k_string(int n, int k);
 int *convertToArr(int number);
 char *A;
+typedef enum { false,
+               true } bool;
 
 void problem1(int n)
 {
@@ -52,16 +54,29 @@ void problem4(int n, int k)
 
 void problem5(int *inArr, int arrSize)
 {
-    int *numArr = convertToArr(101011);
-    for (int i = 0; i < 6; i++)
+    int n = (int)(log10(inArr[0])) + 1;
+    int *twoD[arrSize];
+    bool *visArr[arrSize];
+    for (int i = 0; i < arrSize; i++)
     {
-        printf("%i", numArr[i]);
+        twoD[i] = (int *)malloc(n * sizeof(int));
+        visArr[i] = (bool *)malloc(n * sizeof(bool));
+    }
+
+    for (int i = 0; i < arrSize; i++)
+    {
+        int *t = convertToArr(inArr[i]);
+        for (int j = 0; j < n; j++)
+        {
+            twoD[i][j] = t[j];
+            visArr[i][j] = false;
+        }
     }
 }
 
 int *convertToArr(int number)
 {
-    double n = (int)(log10(number)) + 1;
+    int n = (int)(log10(number)) + 1;
     int *numArr = calloc(n, sizeof(int));
     for (int i = 0; i < n; i++)
     {
@@ -137,8 +152,8 @@ void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr)
 
 int main()
 {
-    int num[1] = {101};
-    problem5(num, 0);
+    int num[3] = {101, 111, 111};
+    problem5(num, 3);
 
     return 0;
 }
