@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+typedef enum { false,
+               true } bool;
 void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr);
 void sort(int *arr, int val, int n, int size);
 void Binary(int n);
 void k_string(int n, int k);
+int findMax(int **intArr, bool **boolArr, int r, int c);
+int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr);
 int *convertToArr(int number);
 char *A;
-typedef enum { false,
-               true } bool;
 
 void problem1(int n)
 {
@@ -72,6 +74,39 @@ void problem5(int *inArr, int arrSize)
             visArr[i][j] = false;
         }
     }
+    for (int i = 0; i < arrSize; i++)
+    {
+        for (int j = 0; j < n; j++)
+
+        {
+            printf("%d", boundsChecker(i, j, arrSize, n, visArr));
+        }
+    }
+}
+int findMax(int **intArr, bool **boolArr, int r, int c)
+{
+    int max = 0;
+    return max;
+}
+int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr)
+{
+    if ((r >= bound_r) || (r < 0))
+    {
+        return 0;
+    }
+    if ((c >= bound_c) || (c < 0))
+    {
+        return 0;
+    }
+    if (boolArr[r][c] == true)
+    {
+        return 0;
+    }
+    else
+    {
+        boolArr[r][c] = false;
+    }
+    return 1;
 }
 
 int *convertToArr(int number)
