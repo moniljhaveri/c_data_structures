@@ -9,11 +9,28 @@ void Binary(int n);
 void k_string(int n, int k);
 int findMax(int **intArr, bool **boolArr, int r, int c);
 int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr);
-int *convertToArr(int number);
+int *convertToArr(int number, int max);
 int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_c, int bound_r);
 int findMax(int **intArr, bool **boolArr, int max_r, int max_c);
 char *A;
 
+void print(bool matrix[1][5])
+{
+    int i, j;
+    for (i = 0; i < 1; i++)
+    {
+        for (j = 0; j < 5; j++)
+            if (matrix[i][j] == true)
+            {
+                printf("1 ");
+            }
+            else
+            {
+                printf("0 ");
+            }
+        printf("\n");
+    }
+}
 void problem1(int n)
 {
     //recursive problem 1
@@ -69,7 +86,7 @@ void problem5(int *inArr, int arrSize)
 
     for (int i = 0; i < arrSize; i++)
     {
-        int *t = convertToArr(inArr[i]);
+        int *t = convertToArr(inArr[i], n);
         for (int j = 0; j < n; j++)
         {
             twoD[i][j] = t[j];
@@ -77,7 +94,7 @@ void problem5(int *inArr, int arrSize)
         }
     }
     int max = findMax(twoD, visArr, arrSize, n);
-    return max;
+    printf("%d\n", max);
 }
 int findMax(int **intArr, bool **boolArr, int max_r, int max_c)
 {
@@ -111,29 +128,30 @@ int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr)
     }
     else
     {
-        boolArr[r][c] = false;
+        boolArr[r][c] = true;
     }
     return 1;
 }
 int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_r, int bound_c)
 {
-    if (boundsChecker(r, c, bound_r, bound_c, boolArr))
+    if (boundsChecker(r, c, bound_r, bound_c, boolArr) && (intArr[r][c]))
     {
+
         int max = 0;
-        max = 1 + recursiance_funct(intArr, boolArr, r - 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c + 1, bound_r, bound_c);
+        max += 1 + recursiance_funct(intArr, boolArr, r - 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c + 1, bound_r, bound_c);
         return max;
     }
     return 0;
 }
 
-int *convertToArr(int number)
+int *convertToArr(int number, int max)
 {
     int n = (int)(log10(number)) + 1;
-    int *numArr = calloc(n, sizeof(int));
+    int *numArr = calloc(max, sizeof(int));
     for (int i = 0; i < n; i++)
     {
         int remainder = number % 10;
-        int ind = (n - 1) - i;
+        int ind = (max - 1) - i;
         numArr[ind] = remainder;
         number /= 10;
     }
@@ -204,8 +222,8 @@ void towerOfHanoi(int n, int *sourceArr, int *destArr, int *auxArr)
 
 int main()
 {
-    int num[3] = {101, 111, 111};
-    problem5(num, 3);
+    int num[5] = {11000, 1100, 101, 10001, 1011};
+    problem5(num, 5);
 
     return 0;
 }
