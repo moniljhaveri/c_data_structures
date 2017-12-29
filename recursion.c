@@ -11,6 +11,7 @@ int findMax(int **intArr, bool **boolArr, int r, int c);
 int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr);
 int *convertToArr(int number);
 int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_c, int bound_r);
+int findMax(int **intArr, bool **boolArr, int max_r, int max_c);
 char *A;
 
 void problem1(int n)
@@ -75,18 +76,23 @@ void problem5(int *inArr, int arrSize)
             visArr[i][j] = false;
         }
     }
-    for (int i = 0; i < arrSize; i++)
-    {
-        for (int j = 0; j < n; j++)
-
-        {
-            printf("%d", boundsChecker(i, j, arrSize, n, visArr));
-        }
-    }
+    int max = findMax(twoD, visArr, arrSize, n);
+    return max;
 }
-int findMax(int **intArr, bool **boolArr, int r, int c)
+int findMax(int **intArr, bool **boolArr, int max_r, int max_c)
 {
     int max = 0;
+    for (int i = 0; i < max_r; i++)
+    {
+        for (int j = 0; j < max_c; j++)
+        {
+            int tmpMax = recursiance_funct(intArr, boolArr, i, j, max_r, max_c);
+            if (max < tmpMax)
+            {
+                max = tmpMax;
+            }
+        }
+    }
     return max;
 }
 int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr)
@@ -109,9 +115,14 @@ int boundsChecker(int r, int c, int bound_r, int bound_c, bool **boolArr)
     }
     return 1;
 }
-int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_c, int bound_r)
+int recursiance_funct(int **intArr, bool **boolArr, int r, int c, int bound_r, int bound_c)
 {
-
+    if (boundsChecker(r, c, bound_r, bound_c, boolArr))
+    {
+        int max = 0;
+        max = 1 + recursiance_funct(intArr, boolArr, r - 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c + 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r + 1, c - 1, bound_r, bound_c) + recursiance_funct(intArr, boolArr, r - 1, c + 1, bound_r, bound_c);
+        return max;
+    }
     return 0;
 }
 
