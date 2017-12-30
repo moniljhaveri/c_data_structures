@@ -40,7 +40,13 @@ struct Node *deleteNode(int data, struct Node *node)
     struct Node *prevNode;
     if (node->data == data)
     {
-        head = node->next;
+        if (node->next != NULL)
+        {
+            head = node->next;
+            return head;
+        }
+        free(node);
+        free(head);
         return head;
     }
     prevNode = node;
@@ -78,8 +84,10 @@ int main()
     addNode(15, head);
     head = lList;
     head = deleteNode(10, head);
-    printData(head);
-    printf("\n");
+    head = deleteNode(11, head);
+    head = deleteNode(12, head);
+    head = deleteNode(13, head);
+    head = deleteNode(14, head);
     head = deleteNode(15, head);
     printData(head);
     return 0;
