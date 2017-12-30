@@ -1,2 +1,3 @@
 gcc -Wall -ggdb -o recursion recursion.c  -lm
-./recursion 
+gcc -Wall -ggdb -o linkedList linked_list.c  -lm
+./linkedList
