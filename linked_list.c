@@ -8,9 +8,10 @@ struct Node
     struct Node *next;
 };
 struct Node *traverseLinkedList(struct Node *node);
-void addNode(int data, struct Node *linkedList);
+void addNodeEnd(int data, struct Node *linkedList);
 struct Node *createNode(int data);
 struct Node *deleteNode(int data, struct Node *head);
+void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head);
 
 struct Node *createNode(int data)
 {
@@ -19,6 +20,7 @@ struct Node *createNode(int data)
     node->next = NULL;
     return node;
 }
+
 struct Node *traverseLinkedList(struct Node *node)
 {
     while (node->next)
@@ -27,11 +29,19 @@ struct Node *traverseLinkedList(struct Node *node)
     }
     return node;
 }
-void addNode(int data, struct Node *linkedList)
+
+void addNodeEnd(int data, struct Node *linkedList)
 {
     struct Node *newNode = createNode(data);
     struct Node *endNode = traverseLinkedList(linkedList);
     endNode->next = newNode;
+}
+
+void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head)
+{
+    struct Node *newHead = createNode(data);
+    newHead->next = head;
+    *head_ptr = newHead;
 }
 
 struct Node *deleteNode(int data, struct Node *node)
@@ -77,18 +87,22 @@ int main()
     struct Node *head;
     struct Node *lList = createNode(10);
     head = lList;
-    addNode(11, head);
-    addNode(12, head);
-    addNode(13, head);
-    addNode(14, head);
-    addNode(15, head);
+    addNodeEnd(11, head);
+    addNodeEnd(12, head);
+    addNodeEnd(13, head);
+    addNodeEnd(14, head);
+    addNodeEnd(15, head);
     head = lList;
     head = deleteNode(10, head);
     head = deleteNode(11, head);
     head = deleteNode(12, head);
     head = deleteNode(13, head);
     head = deleteNode(14, head);
-    head = deleteNode(15, head);
+    addNodeBeginning(10, &head, head);
+    addNodeBeginning(11, &head, head);
+    addNodeBeginning(12, &head, head);
+    addNodeBeginning(13, &head, head);
+    addNodeBeginning(14, &head, head);
     printData(head);
     return 0;
 }
