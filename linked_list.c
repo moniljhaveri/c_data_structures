@@ -12,6 +12,7 @@ void addNodeEnd(int data, struct Node *linkedList);
 struct Node *createNode(int data);
 struct Node *deleteNode(int data, struct Node *head);
 void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head);
+void addNodeMiddle(int whereTo, int data, struct Node *head);
 
 struct Node *createNode(int data)
 {
@@ -42,6 +43,22 @@ void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head)
     struct Node *newHead = createNode(data);
     newHead->next = head;
     *head_ptr = newHead;
+}
+void addNodeMiddle(int whereTo, int data, struct Node *head)
+{
+    struct Node *nodeToAdd = createNode(data);
+    struct Node *cur = head;
+    while (cur)
+    {
+        if (cur->data == whereTo)
+        {
+
+            nodeToAdd->next = cur->next;
+            cur->next = nodeToAdd;
+            return;
+        }
+        cur = cur->next;
+    }
 }
 
 struct Node *deleteNode(int data, struct Node *node)
@@ -103,6 +120,10 @@ int main()
     addNodeBeginning(12, &head, head);
     addNodeBeginning(13, &head, head);
     addNodeBeginning(14, &head, head);
+    addNodeMiddle(14, 55, head);
+    addNodeMiddle(14, 56, head);
+    addNodeMiddle(14, 57, head);
+    addNodeMiddle(14, 58, head);
     printData(head);
     return 0;
 }
