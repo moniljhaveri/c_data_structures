@@ -13,6 +13,7 @@ struct Node *createNode(int data);
 struct Node *deleteNode(int data, struct Node *head);
 void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head);
 void addNodeMiddle(int whereTo, int data, struct Node *head);
+void deleteFirstNode(struct Node **head);
 
 struct Node *createNode(int data)
 {
@@ -59,6 +60,12 @@ void addNodeMiddle(int whereTo, int data, struct Node *head)
         }
         cur = cur->next;
     }
+}
+void deleteFirstNode(struct Node **head)
+{
+    struct Node **pp;
+    pp = (*head)->next;
+    *head = pp;
 }
 
 struct Node *deleteNode(int data, struct Node *node)
@@ -124,6 +131,9 @@ int main()
     addNodeMiddle(14, 56, head);
     addNodeMiddle(14, 57, head);
     addNodeMiddle(14, 58, head);
+    printData(head);
+    deleteFirstNode(&head);
+    printf("\n");
     printData(head);
     return 0;
 }
