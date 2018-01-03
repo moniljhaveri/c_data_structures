@@ -155,6 +155,7 @@ int main()
     printf("\n");
     insertNodeMiddleDoublyLinked(3, 100, &head);
     deleteNodeBeginningDoublyNodeLinked(&head);
+    deleteNodeEndDoublyNodeLinked(&head);
     printData(head);
     return 0;
 }

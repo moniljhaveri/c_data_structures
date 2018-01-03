@@ -51,6 +51,17 @@ void deleteNodeBeginningDoublyNodeLinked(struct Node **head)
     *head = (*head)->next;
     (*head)->prev = NULL;
 }
+void deleteNodeEndDoublyNodeLinked(struct Node **head)
+{
+    struct Node *curr = *head;
+    while ((curr->next)->next)
+    {
+        curr = curr->next;
+    }
+    struct Node *deleteNode = curr->next;
+    curr->next = NULL;
+    free(deleteNode);
+}
 
 void printTest()
 {
