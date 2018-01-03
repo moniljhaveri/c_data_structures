@@ -1,28 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "DoublyLinkedList.h"
 
+/*
 struct Node
 {
     // singly linked list
     int data;
     struct Node *next;
 };
+*/
 struct Node *traverseLinkedList(struct Node *node);
 void addNodeEnd(int data, struct Node *linkedList);
-struct Node *createNode(int data);
 struct Node *deleteNode(int data, struct Node *head);
 void addNodeBeginning(int data, struct Node **head_ptr, struct Node *head);
 void addNodeMiddle(int whereTo, int data, struct Node *head);
 void deleteFirstNode(struct Node **head);
 void deleteLastNode(struct Node *head);
-
-struct Node *createNode(int data)
-{
-    struct Node *node = (struct Node *)malloc(sizeof(struct Node));
-    node->data = data;
-    node->next = NULL;
-    return node;
-}
 
 struct Node *traverseLinkedList(struct Node *node)
 {
@@ -118,6 +112,7 @@ void printData(struct Node *node)
 }
 int main()
 {
+    /*
     struct Node *head;
     struct Node *lList = createNode(10);
     head = lList;
@@ -147,6 +142,18 @@ int main()
     printData(head);
     deleteLastNode(head);
     printf("\n");
+    printData(head);
+    */
+    struct Node *head;
+    struct Node *doublyLinkedList = createNode(2);
+    head = doublyLinkedList;
+    insertNodeBeginningDoublyLinked(3, &head);
+    insertNodeBeginningDoublyLinked(4, &head);
+    insertNodeBeginningDoublyLinked(2, &head);
+    insertNodeBeginningDoublyLinked(5, &head);
+    printData(head);
+    printf("\n");
+    insertNodeMiddleLinked(3, 100, &head);
     printData(head);
     return 0;
 }
