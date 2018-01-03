@@ -153,7 +153,8 @@ int main()
     insertNodeBeginningDoublyLinked(5, &head);
     printData(head);
     printf("\n");
-    insertNodeMiddleLinked(3, 100, &head);
+    insertNodeMiddleDoublyLinked(3, 100, &head);
+    deleteNodeBeginningDoublyNodeLinked(&head);
     printData(head);
     return 0;
 }
