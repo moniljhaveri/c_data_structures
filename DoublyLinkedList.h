@@ -9,6 +9,8 @@ struct Node
 struct Node *createNode(int data);
 void insertNodeDoublyLinked(int data, struct Node **head);
 void deleteNodeBeginningDoublyNodeLinked(struct Node **head);
+void deleteNodeEndDoublyNodeLinked(struct Node **head);
+void deleteNodeMiddleDoublyNodeLinked(int deleteData, struct Node **head);
 
 struct Node *createNode(int data)
 {
@@ -24,6 +26,7 @@ void insertNodeBeginningDoublyLinked(int data, struct Node **head)
     struct Node *newNode = createNode(data);
     newNode->next = *head;
     *head = newNode;
+    ((*head)->next)->prev = *head;
 }
 
 void insertNodeMiddleDoublyLinked(int whereTo, int data, struct Node **head)
@@ -51,6 +54,7 @@ void deleteNodeBeginningDoublyNodeLinked(struct Node **head)
     *head = (*head)->next;
     (*head)->prev = NULL;
 }
+
 void deleteNodeEndDoublyNodeLinked(struct Node **head)
 {
     struct Node *curr = *head;
@@ -61,6 +65,22 @@ void deleteNodeEndDoublyNodeLinked(struct Node **head)
     struct Node *deleteNode = curr->next;
     curr->next = NULL;
     free(deleteNode);
+}
+void deleteNodeMiddleDoublyNodeLinked(int deleteData, struct Node **head)
+{
+    struct Node *curr = *head;
+    while (curr->next)
+    {
+        if (curr->data == deleteData)
+        {
+            struct Node *deleteNode = curr;
+            (curr->prev)->next = curr->next;
+            (curr->next)->prev = curr->prev;
+            free(deleteNode);
+            return;
+        }
+        curr = curr->next;
+    }
 }
 
 void printTest()

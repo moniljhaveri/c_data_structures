@@ -157,5 +157,8 @@ int main()
     deleteNodeBeginningDoublyNodeLinked(&head);
     deleteNodeEndDoublyNodeLinked(&head);
     printData(head);
+    printf("Delete Middle\n");
+    deleteNodeMiddleDoublyNodeLinked(3, &head);
+    printData(head);
     return 0;
 }
