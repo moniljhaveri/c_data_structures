@@ -1,3 +1,5 @@
+#ifndef __DOUBLY_LINKED_LIST_H__
+#define __DOUBLY_LINKED_LIST_H__
 #include <stdio.h>
 #include <stdlib.h>
 struct Node
@@ -83,7 +85,10 @@ void deleteNodeMiddleDoublyNodeLinked(int deleteData, struct Node **head)
     }
 }
 
+
+
 void printTest()
 {
     printf("Hello world\n");
 }
+#endif
