@@ -162,6 +162,6 @@ int main()
     */
     struct Node* head = initCircularNode(0); 
     int count = countCircularNode(&head); 
-    printf("%i\n", count); 
+    printCircular(&head); 
     return 0;
 }
