@@ -18,6 +18,19 @@ int countCircularNode(struct Node** head){
     } 
     return count; 
 }
+void insertBeginningCircularNode(int data, struct Node** head){
+    struct Node* curr = *head; 
+    struct Node* newNode = createNode(data); 
+    while((curr->next != *head)){
+        curr = curr->next; 
+    }
+    curr->next = newNode; 
+    newNode->next = *head; 
+    newNode->prev = (*head)->prev; 
+    (*head)->prev = newNode; 
+    *head = newNode; 
+}
+
 void printCircular(struct Node** head){
     struct Node* curr = *head; 
 
@@ -30,6 +43,6 @@ void printCircular(struct Node** head){
         printf("%i\n", curr->data); 
         curr = curr->next; 
     }
-    while((curr->next)&&(curr->next != *head)); 
+    while(curr != *head); 
 
 }

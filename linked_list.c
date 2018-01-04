@@ -162,6 +162,9 @@ int main()
     */
     struct Node* head = initCircularNode(0); 
     int count = countCircularNode(&head); 
+    insertBeginningCircularNode(3, &head); 
+    insertBeginningCircularNode(4, &head); 
+    insertBeginningCircularNode(5, &head); 
     printCircular(&head); 
     return 0;
 }
