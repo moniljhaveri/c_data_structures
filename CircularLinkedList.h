@@ -41,6 +41,16 @@ void insertEndCircularNode(int data, struct Node ** head){
     curr->next = newNode;
     newNode->prev = curr; 
     newNode->next = *head; 
+    (*head)->prev = newNode; 
+}
+
+void deleteNodeFirstCircularNode( struct Node** head){
+    struct Node* curr = *head; 
+    struct Node* nextNode = curr->next; 
+    nextNode->prev = curr->prev; 
+    (curr->prev)->next = nextNode; 
+    *head = nextNode; 
+    free(curr); 
 
 }
 

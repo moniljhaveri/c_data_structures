@@ -166,6 +166,7 @@ int main()
     insertBeginningCircularNode(4, &head); 
     insertBeginningCircularNode(5, &head); 
     insertEndCircularNode(-1, &head); 
+    deleteNodeFirstCircularNode(&head); 
     printCircular(&head); 
     return 0;
 }
