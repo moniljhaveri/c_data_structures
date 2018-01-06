@@ -170,7 +170,9 @@ int main()
     deleteNodeFirstCircularNode(&head); 
     printCircular(&head); 
     */
-    struct ADTNode* head = initADTNode(0); 
+    struct ADTNode* head = createADTNode(0); 
+    insertBeginningADTList(1, &head); 
+    insertBeginningADTList(2, &head); 
     printADTNodes(&head);
 
     return 0;
