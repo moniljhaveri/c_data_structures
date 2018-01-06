@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "DoublyLinkedList.h"
 #include "CircularLinkedList.h"
+#include "ADTLinkedList.h"
 /*
 struct Node
 {
@@ -160,7 +161,7 @@ int main()
     deleteNodeMiddleDoublyNodeLinked(3, &head);
     printData(head);
     */
-    struct Node* head = initCircularNode(0); 
+ /*   struct Node* head = initCircularNode(0); 
     int count = countCircularNode(&head); 
     insertBeginningCircularNode(3, &head); 
     insertBeginningCircularNode(4, &head); 
@@ -168,5 +169,9 @@ int main()
     insertEndCircularNode(-1, &head); 
     deleteNodeFirstCircularNode(&head); 
     printCircular(&head); 
+    */
+    struct ADTNode* head = initADTNode(0); 
+    printADTNodes(&head);
+
     return 0;
 }
