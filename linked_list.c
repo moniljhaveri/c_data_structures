@@ -173,6 +173,10 @@ int main()
     struct ADTNode* head = createADTNode(0); 
     insertBeginningADTList(1, &head); 
     insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertEndADTList(100, &head); 
     printADTNodes(&head);
 
     return 0;

@@ -40,3 +40,23 @@ void insertBeginningADTList(int data, struct ADTNode** head){
     curr->ptrdiff = (struct ADTNode*)xor_ptr; 
     *head = node;  
 }
+
+void insertEndADTList(int data, struct ADTNode ** head){ 
+    struct ADTNode* node = createADTNode(data); 
+    struct ADTNode* curr = *head; 
+    struct ADTNode *prev = NULL; 
+    uintptr_t xor_ptr = ((uintptr_t)curr ^ (uintptr_t)prev); 
+    uintptr_t tmp_ptr = ((uintptr_t)curr ^ (uintptr_t)prev); 
+    while(xor_ptr){ 
+       xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev); 
+       tmp_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)node); 
+       prev = curr; 
+       curr = (struct ADTNode*)xor_ptr;  
+    }
+       xor_ptr = ((uintptr_t)NULL ^ (uintptr_t)prev); 
+       node->ptrdiff = (struct ADTNode*)xor_ptr;
+       prev->ptrdiff = (struct ADTNode*)tmp_ptr; 
+       
+    
+
+}
