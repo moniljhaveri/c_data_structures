@@ -161,7 +161,7 @@ int main()
     deleteNodeMiddleDoublyNodeLinked(3, &head);
     printData(head);
     */
- /*   struct Node* head = initCircularNode(0); 
+    /*   struct Node* head = initCircularNode(0); 
     int count = countCircularNode(&head); 
     insertBeginningCircularNode(3, &head); 
     insertBeginningCircularNode(4, &head); 
@@ -170,13 +170,20 @@ int main()
     deleteNodeFirstCircularNode(&head); 
     printCircular(&head); 
     */
-    struct ADTNode* head = createADTNode(0); 
-    insertBeginningADTList(1, &head); 
-    insertBeginningADTList(2, &head); 
-    insertBeginningADTList(2, &head); 
-    insertBeginningADTList(2, &head); 
-    insertBeginningADTList(2, &head); 
-    insertEndADTList(100, &head); 
+    struct ADTNode *head = createADTNode(0);
+    insertBeginningADTList(1, &head);
+    insertBeginningADTList(2, &head);
+    insertBeginningADTList(2, &head);
+    insertBeginningADTList(2, &head);
+    insertBeginningADTList(2, &head);
+    insertEndADTList(100, &head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
+    deleteBeginningADTNode(&head);
     printADTNodes(&head);
 
     return 0;
