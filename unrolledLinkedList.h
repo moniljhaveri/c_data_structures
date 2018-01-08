@@ -20,3 +20,10 @@ struct node *createNode(int data)
     node->data = data;
     return node;
 }
+
+struct node *initNode(int data)
+{
+    struct node *node = createNode(data);
+    node->ptrdiff = node;
+    return node;
+}
