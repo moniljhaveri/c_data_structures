@@ -170,20 +170,15 @@ int main()
     deleteNodeFirstCircularNode(&head); 
     printCircular(&head); 
     */
-    struct ADTNode *head = createADTNode(0);
-    insertBeginningADTList(1, &head);
-    insertBeginningADTList(2, &head);
-    insertBeginningADTList(2, &head);
-    insertBeginningADTList(2, &head);
-    insertBeginningADTList(2, &head);
-    insertEndADTList(100, &head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
-    deleteBeginningADTNode(&head);
+    struct ADTNode* head = createADTNode(0); 
+    insertBeginningADTList(1, &head); 
+    insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertBeginningADTList(2, &head); 
+    insertEndADTList(100, &head); 
+    insertEndADTList(101, &head); 
+    insertEndADTList(102, &head); 
     printADTNodes(&head);
 
     return 0;
