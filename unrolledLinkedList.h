@@ -93,6 +93,24 @@ void insertNode(int data, struct node **head)
 
 void insertData(int data, struct nodeBlock **block)
 {
+
     struct nodeBlock *curr = *block;
-    insertNode(data, &(curr->head));
+    if (curr->currNodes >= curr->maxNodes)
+    {
+        struct nodeBlock *newBlock = initNodeBlock(data, curr->maxNodes);
+        struct nodeBlock *prev = NULL;
+        uintptr_t xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
+        while (xor_ptr)
+        {
+            xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
+            tmp_ptr = ((uintptr_t)newBlock ^ (uintptr_t)prev);
+            curr = prev;
+            curr = (struct nodeBlock *)xor_ptr;
+        }
+        prev->ptrdiff = (struct nodeBlock *)tmp_ptr;
+    }
+    else
+    {
+        curr->currNodes++;
+    }
 }
