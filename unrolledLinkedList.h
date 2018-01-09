@@ -3,14 +3,16 @@
 #include <stdint.h>
 struct node
 {
+    // cannot do circular linked list with xor linked list
+    // changing to singulary linked list
     int data;
-    struct node *ptrdiff;
+    struct node *next;
 };
 
 struct nodeBlock
 {
-    int size;
-    int currSize;
+    int maxNodes;
+    int currNodes;
     struct node *head;
     struct nodeBlock *ptrdiff;
 };
@@ -25,24 +27,21 @@ struct node *createNode(int data)
 struct node *initNode(int data)
 {
     struct node *node = createNode(data);
-    node->ptrdiff = node;
+    node->next = node;
     return node;
-}
-
-void insertNode(int data, struct node **head)
-{
-    struct node *curr = *head;
 }
 
 struct nodeBlock *initNodeBlock(int data, int size)
 {
     struct nodeBlock *nodeBlock = (struct nodeBlock *)malloc(sizeof(nodeBlock));
     nodeBlock->ptrdiff = NULL;
-    nodeBlock->size = size;
-    if (size)
+    nodeBlock->maxNodes = size;
+    if (nodeBlock->maxNodes)
     {
         nodeBlock->head = initNode(data);
+        return nodeBlock;
     }
+    nodeBlock->currNodes++;
     return nodeBlock;
 }
 
@@ -54,15 +53,11 @@ void printNode(struct node **head)
         return;
     }
     struct node *curr = *head;
-    struct node *prev = NULL;
-    uintptr_t xor_ptr = ((uintptr_t)curr ^ (uintptr_t)prev);
     do
     {
         printf("%i\n", curr->data);
-        xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
-        curr = prev;
-        curr = (struct node *)xor_ptr;
-    } while (xor_ptr != (uintptr_t)*head);
+        curr = curr->next;
+    } while (curr != *head);
 }
 
 void printBlock(struct nodeBlock **block)
@@ -81,4 +76,23 @@ void printBlock(struct nodeBlock **block)
         count++;
 
     } while (xor_ptr);
+}
+
+void insertNode(int data, struct node **head)
+{
+    struct node *curr = *head;
+    struct node *newNode = createNode(data);
+    newNode->next = curr;
+    while (curr->next != *head)
+    {
+        curr = curr->next;
+    }
+    curr->next = newNode;
+    *head = newNode;
+}
+
+void insertData(int data, struct nodeBlock **block)
+{
+    struct nodeBlock *curr = *block;
+    insertNode(data, &(curr->head));
 }
