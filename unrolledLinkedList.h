@@ -35,12 +35,12 @@ struct nodeBlock *initNodeBlock(int data, int size)
 {
     struct nodeBlock *nodeBlock = (struct nodeBlock *)malloc(sizeof(nodeBlock));
     nodeBlock->ptrdiff = NULL;
-    nodeBlock->maxNodes = size;
-    if (nodeBlock->maxNodes)
+    if (size == 0)
     {
-        nodeBlock->head = initNode(data);
         return nodeBlock;
     }
+    nodeBlock->maxNodes = size;
+    nodeBlock->head = initNode(data);
     nodeBlock->currNodes++;
     return nodeBlock;
 }
@@ -71,7 +71,7 @@ void printBlock(struct nodeBlock **block)
         printf("Block %i\n", count);
         printNode(&curr->head);
         xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
-        curr = prev;
+        prev = curr;
         curr = (struct nodeBlock *)xor_ptr;
         count++;
 
@@ -100,17 +100,23 @@ void insertData(int data, struct nodeBlock **block)
         struct nodeBlock *newBlock = initNodeBlock(data, curr->maxNodes);
         struct nodeBlock *prev = NULL;
         uintptr_t xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
-        while (xor_ptr)
-        {
+        uintptr_t tmp_ptr = ((uintptr_t)newBlock ^ (uintptr_t)prev);
+        do {
             xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
             tmp_ptr = ((uintptr_t)newBlock ^ (uintptr_t)prev);
-            curr = prev;
+            prev = curr;
             curr = (struct nodeBlock *)xor_ptr;
+
         }
+        while (xor_ptr); 
+        insertNode(data, &newBlock->head); 
+        newBlock->currNodes++; 
         prev->ptrdiff = (struct nodeBlock *)tmp_ptr;
+        return; 
     }
     else
     {
+        insertNode(data, &curr->head); 
         curr->currNodes++;
     }
 }

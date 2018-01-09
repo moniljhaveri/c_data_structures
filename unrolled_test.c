@@ -8,7 +8,9 @@ int main(void)
     struct nodeBlock *nodeBlock = initNodeBlock(0, 2);
     insertData(1, &nodeBlock);
     insertData(2, &nodeBlock);
-    insertData(3, &nodeBlock);
+    //insertData(3, &nodeBlock);
+   /* insertData(4, &nodeBlock);
+    */
     printBlock(&nodeBlock);
     return 0;
 }
