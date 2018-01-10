@@ -95,28 +95,27 @@ void insertData(int data, struct nodeBlock **block)
 {
 
     struct nodeBlock *curr = *block;
-    if (curr->currNodes >= curr->maxNodes)
+    struct nodeBlock *prev = NULL;
+    struct nodeBlock *newBlock = initNodeBlock(data, curr->maxNodes);
+    uintptr_t xor_ptr = ((uintptr_t)curr ^ (uintptr_t)prev);
+    uintptr_t tmp_ptr = ((uintptr_t)curr ^ (uintptr_t)prev);
+    while (xor_ptr)
     {
-        struct nodeBlock *newBlock = initNodeBlock(data, curr->maxNodes);
-        struct nodeBlock *prev = NULL;
-        uintptr_t xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
-        uintptr_t tmp_ptr = ((uintptr_t)newBlock ^ (uintptr_t)prev);
-        do {
-            xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
-            tmp_ptr = ((uintptr_t)newBlock ^ (uintptr_t)prev);
-            prev = curr;
-            curr = (struct nodeBlock *)xor_ptr;
-
-        }
-        while (xor_ptr); 
-        insertNode(data, &newBlock->head); 
-        newBlock->currNodes++; 
+        xor_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)prev);
+        tmp_ptr = ((uintptr_t)curr->ptrdiff ^ (uintptr_t)newBlock);
+        prev = curr;
+        curr = (struct nodeBlock *)xor_ptr;
+    }
+    if (prev->currNodes >= prev->maxNodes)
+    {
+        xor_ptr = ((uintptr_t)NULL ^ (uintptr_t)prev);
+        newBlock->ptrdiff = (struct nodeBlock *)xor_ptr;
         prev->ptrdiff = (struct nodeBlock *)tmp_ptr;
-        return; 
     }
     else
     {
-        insertNode(data, &curr->head); 
-        curr->currNodes++;
+        insertNode(data, &prev->head);
+        prev->currNodes++;
+        free(newBlock);
     }
 }
