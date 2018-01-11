@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "singlylinkedlist.h"
+#include "minunit.h"
+int tests_run = 0;
 typedef struct Stack
 {
     int size;
@@ -40,15 +42,32 @@ int isEmptyStack(Stack *stack)
     return 0;
 }
 
-void problem1()
+static char *problem1()
 {
     Stack *stack = createStack(0);
     deleteBeginning(&(stack->head));
-    printf("%i\n", isEmptyStack(stack));
+    int result = 1;
+    mu_assert("error  0 != isEmptyStack(stack)", isEmptyStack(stack) == 0);
+    return 0;
+}
+static char *run_problem1_tests()
+{
+    mu_run_test(problem1);
+    return 0;
 }
 
 int main(void)
 {
-    problem1();
-    return 0;
+    char *result = run_problem1_tests();
+    if (result != 0)
+    {
+        printf("%s\n", result);
+    }
+    else
+    {
+        printf("ALL TESTS PASSED\n");
+    }
+    printf("Tests run: %d\n", tests_run);
+
+    return result != 0;
 }
