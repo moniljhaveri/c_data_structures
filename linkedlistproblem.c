@@ -13,6 +13,7 @@ Stack *createStack(data)
 {
     Stack *newStack = (Stack *)malloc(sizeof(Stack));
     newStack->head = createNode(data);
+    newStack->size++;
     return newStack;
 }
 
@@ -25,6 +26,7 @@ void push(int data, Stack *stack)
 void pop(Stack *stack)
 {
     deleteBeginning(&(stack->head));
+    stack->size--;
 }
 
 int peak(Stack *stack)
@@ -41,11 +43,20 @@ int isEmptyStack(Stack *stack)
     }
     return 0;
 }
+int sizeStack(Stack *stack)
+{
+    return stack->size;
+}
 
 static char *problem1()
 {
     Stack *stack = createStack(0);
-    deleteBeginning(&(stack->head));
+    mu_assert("error  1 == stackSize", sizeStack(stack) == 1);
+    push(1, stack);
+    mu_assert("error  2 != size", sizeStack(stack) == 2);
+    mu_assert("error  1 != stack", peak(stack) == 1);
+    pop(stack);
+    pop(stack);
     int result = 1;
     mu_assert("error  0 != isEmptyStack(stack)", isEmptyStack(stack) == 0);
     return 0;
