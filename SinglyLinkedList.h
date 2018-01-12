@@ -38,3 +38,39 @@ void deleteBeginning(node **head)
     }
     free(copyNode);
 }
+
+node *createCircularList(int data)
+{
+    node *head = createNode(data);
+    head->next = head;
+    return head;
+}
+
+void addToCircularList(int data, node **head)
+{
+    node *newNode = createNode(data);
+    node *curr = *head;
+    while (curr->next != *head)
+    {
+        curr = curr->next;
+    }
+    newNode->next = *head;
+    curr->next = newNode;
+    *head = newNode;
+}
+
+void printNode(node **head)
+{
+    node *curr = *head;
+    int checkCircular = 0;
+    while (curr)
+    {
+        printf("%i\n", curr->data);
+        if (curr->next == *head)
+        {
+            return;
+        }
+        curr = curr->next;
+    }
+    return;
+}
