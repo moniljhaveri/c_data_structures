@@ -12,6 +12,7 @@ node *createNode(int data)
 {
     node *nodeR = (node *)malloc(sizeof(node));
     nodeR->data = data;
+    nodeR->next = NULL;
     return nodeR;
 }
 void addBeginning(int data, node **head)
