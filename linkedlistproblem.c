@@ -48,40 +48,45 @@ int sizeStack(Stack *stack)
     return stack->size;
 }
 
-int findNthNode(Stack *stack, int n)
+int findNthNodeFromEnd(node **head, int n)
 {
-    int count = 1;
-    node *curr = stack->head;
-    while (curr)
+    node *pTemp = *head;
+    node *pNth = NULL;
+    for (int i = 0; i < n; i++)
     {
-        if (count == n)
-        {
-            return curr->data;
-        }
-        count++;
-        curr = curr->next;
+        pTemp = pTemp->next;
     }
+    while (pTemp)
+    {
+        if (pNth == NULL)
+        {
+            pNth = *head;
+        }
+        else
+        {
+            pNth = pNth->next;
+        }
+        pTemp = pTemp->next;
+    }
+    if (pNth)
+    {
+        return pNth->data;
+    }
+
     return -1;
 }
 
 static char *problem2()
 {
-    Stack *stack = createStack(0);
-    push(1, stack);
-    push(1, stack);
-    push(1, stack);
-    push(1, stack);
-    push(1, stack);
-    push(2, stack);
-    push(2, stack);
-    push(2, stack);
-    push(2, stack);
-    push(2, stack);
-    push(2, stack);
-    push(2, stack);
-    mu_assert("error  13 != size", sizeStack(stack) == 13);
-    mu_assert("error  1 != 3rd node", findNthNode(stack, 3) == 2);
-    mu_assert("error  -1 != 14th node", findNthNode(stack, 14) == -1);
+    //find nth node from teh
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    addBeginning(6, &head);
+    mu_assert("error 1 != NthFromTheEnd ", findNthNodeFromEnd(&head, 1) == 1);
     return 0;
 }
 
