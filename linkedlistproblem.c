@@ -102,6 +102,26 @@ int checkForCircular(node **head)
         }
     }
 }
+int findStartingCircularNode(node **head)
+{
+    node *curr = *head;
+    return 0;
+}
+
+static char *problem10()
+{
+    node *head = createCircularList(0);
+    addToCircularList(1, &head);
+    addToCircularList(2, &head);
+    addToCircularList(3, &head);
+    addToCircularList(4, &head);
+    addBeginning(100, &head);
+    addBeginning(110, &head);
+    if (checkForCircular(&head))
+    {
+    }
+    return 0;
+}
 static char *problem6()
 {
     //find if a linked list is
@@ -110,6 +130,8 @@ static char *problem6()
     addToCircularList(2, &head);
     addToCircularList(3, &head);
     addToCircularList(4, &head);
+    addBeginning(100, &head);
+    addBeginning(110, &head);
 
     node *sHead = createNode(0);
     addBeginning(1, &sHead);
