@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "singlylinkedlist.h"
+#include "SinglyLinkedList.h"
 #include "minunit.h"
 int tests_run = 0;
 typedef struct Stack
@@ -75,10 +75,55 @@ int findNthNodeFromEnd(node **head, int n)
 
     return -1;
 }
+int checkForCircular(node **head)
+{
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    while (slowPtr)
+    {
+        if (fastPtr->next)
+        {
+
+            fastPtr = fastPtr->next->next;
+        }
+        else
+        {
+            return 0;
+        }
+
+        slowPtr = slowPtr->next;
+        if ((slowPtr == NULL) || (fastPtr == NULL))
+        {
+            return 0;
+        }
+        if (slowPtr == fastPtr)
+        {
+            return 1;
+        }
+    }
+}
+static char *problem6()
+{
+    //find if a linked list is
+    node *head = createCircularList(0);
+    addToCircularList(1, &head);
+    addToCircularList(2, &head);
+    addToCircularList(3, &head);
+    addToCircularList(4, &head);
+
+    node *sHead = createNode(0);
+    addBeginning(1, &sHead);
+    addBeginning(2, &sHead);
+    addBeginning(3, &sHead);
+    addBeginning(4, &sHead);
+    mu_assert("error 1 != checkForCircular", checkForCircular(&head) == 1);
+    mu_assert("error 0 != checkForCircular", checkForCircular(&sHead) == 0);
+    return 0;
+}
 
 static char *problem2()
 {
-    //find nth node from teh
+    //find nth node from the end
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
@@ -107,6 +152,7 @@ static char *run_problem1_tests()
 {
     mu_run_test(problem1);
     mu_run_test(problem2);
+    mu_run_test(problem6);
     return 0;
 }
 
