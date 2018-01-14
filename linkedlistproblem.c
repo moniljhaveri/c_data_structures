@@ -102,6 +102,30 @@ int checkForCircular(node **head)
         }
     }
 }
+int fastStartCircularNode(node **head)
+{
+    // a faster way to answer question 10
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+
+    while (fastPtr && slowPtr && fastPtr->next)
+    {
+        fastPtr = fastPtr->next->next;
+        slowPtr = slowPtr->next;
+        if (slowPtr == fastPtr)
+        {
+            break;
+        }
+    }
+    slowPtr = *head;
+    while (slowPtr != fastPtr)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next;
+    }
+
+    return fastPtr->data;
+}
 int findStartingCircularNode(node **head)
 {
     node *slowPtr = *head;
@@ -148,6 +172,7 @@ static char *problem10()
         ans = findStartingCircularNode(&head);
     }
     mu_assert("error 4 != findStartCircularNode", 4 == findStartingCircularNode(&head));
+    mu_assert("error 4 != fastStartCircularNode", 4 == fastStartCircularNode(&head));
     return 0;
 }
 static char *problem6()
