@@ -104,7 +104,32 @@ int checkForCircular(node **head)
 }
 int findStartingCircularNode(node **head)
 {
-    node *curr = *head;
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    while (fastPtr->next && fastPtr && slowPtr)
+    {
+        fastPtr = fastPtr->next->next;
+        slowPtr = slowPtr->next;
+        if (slowPtr == fastPtr)
+        {
+            break;
+        }
+    }
+    node *checkPtr = fastPtr;
+    slowPtr = *head;
+    while (1)
+    {
+        fastPtr = fastPtr->next;
+        while (fastPtr->next != checkPtr)
+        {
+            if (fastPtr == slowPtr)
+            {
+                return fastPtr->data;
+            }
+            fastPtr = fastPtr->next;
+        }
+        slowPtr = slowPtr->next;
+    }
     return 0;
 }
 
@@ -117,9 +142,12 @@ static char *problem10()
     addToCircularList(4, &head);
     addBeginning(100, &head);
     addBeginning(110, &head);
+    int ans = -1;
     if (checkForCircular(&head))
     {
+        ans = findStartingCircularNode(&head);
     }
+    mu_assert("error 4 != findStartCircularNode", 4 == findStartingCircularNode(&head));
     return 0;
 }
 static char *problem6()
@@ -170,17 +198,18 @@ static char *problem1()
     mu_assert("error  0 != isEmptyStack(stack)", isEmptyStack(stack) == 0);
     return 0;
 }
-static char *run_problem1_tests()
+static char *run_problem_tests()
 {
     mu_run_test(problem1);
     mu_run_test(problem2);
     mu_run_test(problem6);
+    mu_run_test(problem10);
     return 0;
 }
 
 int main(void)
 {
-    char *result = run_problem1_tests();
+    char *result = run_problem_tests();
     if (result != 0)
     {
         printf("%s\n", result);
