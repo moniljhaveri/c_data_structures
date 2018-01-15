@@ -202,6 +202,38 @@ int findLengthOfLinkedList(node **head)
 
     return count;
 }
+void insertSortedList(int data, int position, node **head)
+{
+    node *curr = *head;
+    node *newNode = createNode(data);
+    int count = 0;
+    if (position == 0)
+    {
+        newNode->next = curr;
+        *head = newNode;
+        return;
+    }
+    while (curr->next)
+    {
+        count++;
+        if (count == position)
+        {
+            newNode->next = curr->next;
+            curr->next = newNode;
+            return;
+        }
+        curr = curr->next;
+    }
+    curr->next = newNode;
+}
+static char *problem15()
+{
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+}
 
 static char *problem14()
 {
