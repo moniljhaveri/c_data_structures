@@ -156,8 +156,75 @@ int findStartingCircularNode(node **head)
     }
     return 0;
 }
+int findLengthOfLinkedList(node **head)
+{
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    int count = 0;
+    int isCycle = 0;
+    while (fastPtr && fastPtr->next)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
+        if (slowPtr == fastPtr)
+        {
+            isCycle = 1;
+            break;
+        }
+    }
+    slowPtr = *head;
+    if (isCycle)
+    {
+        while (slowPtr != fastPtr)
+        {
 
-static char *problem10()
+            slowPtr = slowPtr->next;
+            fastPtr = fastPtr->next;
+            count++;
+        }
+        fastPtr = fastPtr->next;
+        count++;
+        while (slowPtr != fastPtr)
+        {
+
+            fastPtr = fastPtr->next;
+            count++;
+        }
+    }
+    else
+    {
+        while (slowPtr)
+        {
+            count++;
+            slowPtr = slowPtr->next;
+        }
+    }
+
+    return count;
+}
+
+static char *problem14()
+{
+    node *head = createCircularList(0);
+    addToCircularList(1, &head);
+    addToCircularList(2, &head);
+    addToCircularList(3, &head);
+    addToCircularList(4, &head);
+    addBeginning(100, &head);
+    addBeginning(110, &head);
+
+    node *sHead = createNode(0);
+    addBeginning(1, &sHead);
+    addBeginning(2, &sHead);
+    addBeginning(3, &sHead);
+    addBeginning(4, &sHead);
+
+    mu_assert("error 7 != findLengthOfLinkedList", 7 == findLengthOfLinkedList(&head));
+    mu_assert("error 5 != findLengthOfLinkedList", 5 == findLengthOfLinkedList(&sHead));
+    return 0;
+}
+
+static char *problem11()
 {
     node *head = createCircularList(0);
     addToCircularList(1, &head);
@@ -228,7 +295,8 @@ static char *run_problem_tests()
     mu_run_test(problem1);
     mu_run_test(problem2);
     mu_run_test(problem6);
-    mu_run_test(problem10);
+    mu_run_test(problem11);
+    mu_run_test(problem14);
     return 0;
 }
 
