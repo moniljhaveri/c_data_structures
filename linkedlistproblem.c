@@ -202,12 +202,12 @@ int findLengthOfLinkedList(node **head)
 
     return count;
 }
-void insertSortedList(int data, int position, node **head)
+void insertSortedList(int data, node **head)
 {
     node *curr = *head;
+    node *prev = NULL;
     node *newNode = createNode(data);
-    int count = 0;
-    if (position == 0)
+    if (data <= curr->data)
     {
         newNode->next = curr;
         *head = newNode;
@@ -215,24 +215,44 @@ void insertSortedList(int data, int position, node **head)
     }
     while (curr->next)
     {
-        count++;
-        if (count == position)
+        if (data < curr->data)
         {
-            newNode->next = curr->next;
-            curr->next = newNode;
+            newNode->next = curr;
+            prev->next = newNode;
             return;
         }
+        prev = curr;
         curr = curr->next;
     }
     curr->next = newNode;
 }
+int returnNodePosition(int position, node **head)
+{
+    int count = 0;
+    node *curr = *head;
+    while (curr)
+    {
+        if (position == count)
+        {
+            return curr->data;
+        }
+        count++;
+        curr = curr->next;
+    }
+    return -1;
+}
 static char *problem15()
 {
-    node *head = createNode(0);
-    addBeginning(1, &head);
+    node *head = createNode(1);
     addBeginning(2, &head);
     addBeginning(3, &head);
     addBeginning(4, &head);
+    addBeginning(5, &head);
+    insertSortedList(0, &head);
+    insertSortedList(6, &head);
+    mu_assert("error 0 != insertSortedList", 0 == returnNodePosition(0, &head));
+    mu_assert("error 6 != insertSortedList", 6 == returnNodePosition(6, &head));
+    return 0;
 }
 
 static char *problem14()
@@ -329,6 +349,7 @@ static char *run_problem_tests()
     mu_run_test(problem6);
     mu_run_test(problem11);
     mu_run_test(problem14);
+    mu_run_test(problem15);
     return 0;
 }
 
