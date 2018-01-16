@@ -241,6 +241,34 @@ int returnNodePosition(int position, node **head)
     }
     return -1;
 }
+void reverseLinkedList(node **head)
+{
+    node *curr = *head;
+    node *prev = NULL;
+    node *next = curr->next;
+
+    while (next)
+    {
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        next = next->next;
+    }
+    curr->next = prev;
+    *head = curr;
+}
+static char *problem16()
+{
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    reverseLinkedList(&head);
+    printNode(&head);
+    return 0;
+}
+
 static char *problem15()
 {
     node *head = createNode(1);
@@ -350,6 +378,7 @@ static char *run_problem_tests()
     mu_run_test(problem11);
     mu_run_test(problem14);
     mu_run_test(problem15);
+    mu_run_test(problem16);
     return 0;
 }
 
