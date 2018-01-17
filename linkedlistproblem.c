@@ -257,18 +257,21 @@ void reverseLinkedList(node **head)
     curr->next = prev;
     *head = curr;
 }
-void recursiveReverseLinkedList(node **head, node **prev){
+void recursiveReverseLinkedList(node **head, node **prev, node** head_ptr){
     node *curr = *head;
     if(curr == NULL){
         return; 
     }
-    node *curr = *head;
     node *next= curr->next;
     node *p = *prev;
     if(p->data == -1){
         p = NULL;  
     }
-    recursiveReverseLinkedList(&next, &curr); 
+    if(curr->next == NULL){
+        *head_ptr = curr; 
+    }
+    curr->next = p; 
+    recursiveReverseLinkedList(&next, &curr, &*head_ptr); 
 
 }
 static char *problem16()
@@ -280,7 +283,7 @@ static char *problem16()
     addBeginning(4, &head);
     addBeginning(5, &head);
     //reverseLinkedList(&head);
-    recursiveReverseLinkedList(head, prev); 
+    recursiveReverseLinkedList(&head, &prev, &head); 
     printNode(&head);
     return 0;
 }
