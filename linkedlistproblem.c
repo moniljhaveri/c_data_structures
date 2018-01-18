@@ -289,6 +289,18 @@ void createBranchList(node **head, node** end, int position){
     endNode->next = curr; 
 }
 int findIntersectionNode(node** head1, node ** head2){
+    node *curr1 = *head1;
+    while(curr1){
+        node *curr2 = *head2; 
+        while(curr2){
+            if (curr1 == curr2){
+                return curr1->data; 
+            }
+            curr2 = curr2->next; 
+        }
+        curr1 = curr1->next; 
+    }
+    return 0; 
 
 }
 
@@ -303,6 +315,8 @@ static char *problem17(){
     addBeginning(30, &shortHead);
     addBeginning(40, &shortHead);
     createBranchList(&head, &shortHead, 2); 
+    mu_assert("error 2 != findIntersectionNode", 3 == findIntersectionNode(&head, &shortHead));
+    return 0; 
     
 
 }
@@ -430,6 +444,7 @@ static char *run_problem_tests()
     mu_run_test(problem14);
     mu_run_test(problem15);
     mu_run_test(problem16);
+    mu_run_test(problem17);
     return 0;
 }
 
