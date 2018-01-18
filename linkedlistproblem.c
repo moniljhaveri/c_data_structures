@@ -274,6 +274,38 @@ void recursiveReverseLinkedList(node **head, node **prev, node** head_ptr){
     recursiveReverseLinkedList(&next, &curr, &*head_ptr); 
 
 }
+
+void createBranchList(node **head, node** end, int position){
+    node *endNode = *end;
+    node *curr = *head; 
+    int count = 0; 
+    while(endNode->next){
+        endNode = endNode->next;
+    }
+    while(position != count){
+        curr = curr->next; 
+        count++; 
+    }
+    endNode->next = curr; 
+}
+int findIntersectionNode(node** head1, node ** head2){
+
+}
+
+static char *problem17(){
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    node *shortHead = createNode(10);
+    addBeginning(20, &shortHead);
+    addBeginning(30, &shortHead);
+    addBeginning(40, &shortHead);
+    createBranchList(&head, &shortHead, 2); 
+    
+
+}
 static char *problem16()
 {
     node *head = createNode(1);
