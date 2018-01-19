@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SinglyLinkedList.h"
+#include <math.h> 
 #include "minunit.h"
 int tests_run = 0;
 typedef struct Stack
@@ -303,6 +304,52 @@ int findIntersectionNode(node** head1, node ** head2){
     return 0; 
 
 }
+int fastIntersectionNode(node ** head1, node** head2){
+    int count1 = 0;  
+    int count2 = 0; 
+    node *curr1 = *head1; 
+    node *curr2 = *head2;
+
+    while(curr1){
+        count1++; 
+        curr1 = curr1->next; 
+    }
+    while(curr2){
+        count2++; 
+        curr2 = curr2->next; 
+    }
+    node *largestList = (count1 > count2) ? *head1 : *head2; 
+    node *smallestList = (count1 < count2) ? *head1 : *head2; 
+    int numSteps = abs(count1 - count2); 
+    for(int i = 0; i < numSteps; i++){
+        largestList = largestList->next;
+    }
+    while(largestList){
+        if(largestList == smallestList){
+            return smallestList->data; 
+        }
+        largestList = largestList->next; 
+        smallestList = smallestList->next; 
+    }
+
+    return 0; 
+}
+
+static char *problem23(){
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    node *shortHead = createNode(10);
+    addBeginning(20, &shortHead);
+    addBeginning(30, &shortHead);
+    addBeginning(40, &shortHead);
+    createBranchList(&head, &shortHead, 2); 
+    mu_assert("error 3 != findIntersectionNode", 3 == fastIntersectionNode(&head, &shortHead));
+    return 0; 
+
+}
 
 static char *problem17(){
     node *head = createNode(1);
@@ -315,7 +362,7 @@ static char *problem17(){
     addBeginning(30, &shortHead);
     addBeginning(40, &shortHead);
     createBranchList(&head, &shortHead, 2); 
-    mu_assert("error 2 != findIntersectionNode", 3 == findIntersectionNode(&head, &shortHead));
+    mu_assert("error 3 != findIntersectionNode", 3 == findIntersectionNode(&head, &shortHead));
     return 0; 
     
 
@@ -445,6 +492,7 @@ static char *run_problem_tests()
     mu_run_test(problem15);
     mu_run_test(problem16);
     mu_run_test(problem17);
+    mu_run_test(problem23);
     return 0;
 }
 
