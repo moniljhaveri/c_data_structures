@@ -102,6 +102,7 @@ int checkForCircular(node **head)
             return 1;
         }
     }
+    return 0; 
 }
 int fastStartCircularNode(node **head)
 {
@@ -335,6 +336,26 @@ int fastIntersectionNode(node ** head1, node** head2){
     return 0; 
 }
 
+int findMiddleLinkedList(node **head){
+    node *slowPtr = *head; 
+    node *fastPtr = *head; 
+    while(fastPtr && fastPtr->next){
+        slowPtr = slowPtr->next; 
+        fastPtr = fastPtr->next->next; 
+    }
+    return slowPtr->data; 
+}
+
+static char *problem27() {
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    mu_assert("error 3 != findMiddleLinkedList", 3 == findMiddleLinkedList(&head));
+    return 0; 
+}
+
 static char *problem23(){
     node *head = createNode(1);
     addBeginning(2, &head);
@@ -493,6 +514,7 @@ static char *run_problem_tests()
     mu_run_test(problem16);
     mu_run_test(problem17);
     mu_run_test(problem23);
+    mu_run_test(problem27);
     return 0;
 }
 
