@@ -376,6 +376,14 @@ void displayNodeFromEnd(node **head){
         copiedList = copiedList->next; 
 
     }
+} 
+void printReverseLinkedList(node **head){
+    if(!*head){
+        return; 
+    }
+    printReverseLinkedList(&(*head)->next); 
+    printf("%d \n", (*head)->data); 
+
 }
 
 static char *problem28(){
@@ -385,7 +393,9 @@ static char *problem28(){
     addBeginning(3, &head);
     addBeginning(4, &head);
     addBeginning(5, &head);
-    displayNodeFromEnd(&head); 
+    //displayNodeFromEnd(&head); 
+    printf("recursive solution \n"); 
+    printReverseLinkedList(&head); 
     return 0; 
 }
 
