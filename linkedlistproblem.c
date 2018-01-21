@@ -346,6 +346,29 @@ int findMiddleLinkedList(node **head){
     return slowPtr->data; 
 }
 
+void addNodeEnd(node **head, int data){
+    node *curr = *head; 
+    while(curr->next){
+        curr = curr->next; 
+    }
+    node *newNode = createNode(data);     
+    curr->next = newNode; 
+} 
+
+node *copyLinkedList(node **head){
+    node *curr = *head; 
+    node *newList = createNode(curr->data); 
+    while(curr)
+    {
+        
+    }
+
+}
+
+static char *problem28(){
+    return 0; 
+}
+
 static char *problem27() {
     node *head = createNode(1);
     addBeginning(2, &head);
