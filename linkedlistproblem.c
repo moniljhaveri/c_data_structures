@@ -358,10 +358,13 @@ void addNodeEnd(node **head, int data){
 node *copyLinkedList(node **head){
     node *curr = *head; 
     node *newList = createNode(curr->data); 
+    curr = curr->next; 
     while(curr)
     {
-        
+        addNodeEnd(&newList, curr->data); 
+        curr = curr->next;     
     }
+    return newList; 
 
 }
 
