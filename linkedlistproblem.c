@@ -368,7 +368,24 @@ node *copyLinkedList(node **head){
 
 }
 
+void displayNodeFromEnd(node **head){
+    node *copiedList = copyLinkedList(head); 
+    reverseLinkedList(&copiedList);
+    while(copiedList){
+        printf("%i\n", copiedList->data);
+        copiedList = copiedList->next; 
+
+    }
+}
+
 static char *problem28(){
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    displayNodeFromEnd(&head); 
     return 0; 
 }
 
@@ -541,6 +558,7 @@ static char *run_problem_tests()
     mu_run_test(problem17);
     mu_run_test(problem23);
     mu_run_test(problem27);
+    mu_run_test(problem28);
     return 0;
 }
 
