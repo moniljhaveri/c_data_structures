@@ -393,6 +393,16 @@ int recursiveEvenOddLinkedList(node **head, int count){
     return recursiveEvenOddLinkedList(&(*head)->next, ++count); 
 
 }
+int iterativeEvenOddLinkedList(node **head){
+    node *curr = *head; 
+    while(curr && curr->next){
+        curr = curr->next->next;
+    }
+    if(curr){
+        return 1; 
+    }
+    return 0;  
+}
 
 static char *problem29(){
     node *head = createNode(0);
@@ -401,9 +411,11 @@ static char *problem29(){
     addBeginning(3, &head);
     addBeginning(4, &head);
     addBeginning(5, &head);
-    mu_assert("error 0 != recursiveEvenOddLinkedList", 0 == recursiveEvenOddLinkedList(&head, 0));
+    mu_assert("error 0 != recursiveevenoddlinkedlist", 0 == recursiveEvenOddLinkedList(&head, 0));
+    mu_assert("error 0 != iterativeEvenoddlinkedlist", 0 == iterativeEvenOddLinkedList(&head));
     addBeginning(6, &head);
     mu_assert("error 1 != recursiveEvenOddLinkedList", 1 == recursiveEvenOddLinkedList(&head, 0));
+    mu_assert("error 1 != iterativeEvenoddlinkedlist", 1 == iterativeEvenOddLinkedList(&head));
     return 0; 
 }
 
