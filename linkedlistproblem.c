@@ -386,6 +386,27 @@ void printReverseLinkedList(node **head){
 
 }
 
+int recursiveEvenOddLinkedList(node **head, int count){
+    if(!*head){
+        return (count%2); 
+    }
+    return recursiveEvenOddLinkedList(&(*head)->next, ++count); 
+
+}
+
+static char *problem29(){
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    mu_assert("error 0 != recursiveEvenOddLinkedList", 0 == recursiveEvenOddLinkedList(&head, 0));
+    addBeginning(6, &head);
+    mu_assert("error 1 != recursiveEvenOddLinkedList", 1 == recursiveEvenOddLinkedList(&head, 0));
+    return 0; 
+}
+
 static char *problem28(){
     node *head = createNode(0);
     addBeginning(1, &head);
@@ -569,6 +590,7 @@ static char *run_problem_tests()
     mu_run_test(problem23);
     mu_run_test(problem27);
     mu_run_test(problem28);
+    mu_run_test(problem29);
     return 0;
 }
 
