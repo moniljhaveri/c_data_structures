@@ -403,6 +403,9 @@ int iterativeEvenOddLinkedList(node **head){
     }
     return 0;  
 }
+static char *problem30(){ 
+
+}
 
 static char *problem29(){
     node *head = createNode(0);
