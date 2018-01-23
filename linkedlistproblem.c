@@ -403,31 +403,32 @@ int iterativeEvenOddLinkedList(node **head){
     }
     return 0;  
 }
+void insertOrdered(node **head, int data)
+{
+    node *curr = *head; 
+    node *prev = NULL; 
+    node *newNode = createNode(data); 
+
+    if (data < curr->data){
+        newNode->next = curr; 
+        *head = newNode;
+        return; 
+    }
+    while(curr && (data > curr->data)){
+        prev = curr; 
+        curr = curr->next; 
+    }
+    newNode->next = prev->next; 
+    prev->next = newNode; 
+    
+
+}
 void mergSortedLists(node **list1, node **list2){
     node *curr1 = *list1; 
     while(curr1){
         insertOrdered(list2, curr1->data); 
         curr1 = curr1->next; 
     }
-    
-
-
-}
-void insertOrdered(node **head, int data)
-{
-    node *curr = *head; 
-    node *newNode = createNode(data); 
-    if (data < curr->data){
-        newNode->next = curr; 
-        *head = newNode;
-        return; 
-    }
-    while((data > curr->data) && curr->next){
-        curr = curr->next; 
-    }
-    curr->next = newNode; 
-    
-
 }
 static char *problem31(){ 
     node *head = createNode(0);
@@ -441,6 +442,7 @@ static char *problem31(){
     node *head1 = createNode(3);
     addBeginning(4, &head1);
     addBeginning(5, &head1);
+    reverseLinkedList(&head1); 
     mergSortedLists(&head, &head1);
     printf("Test merge\n");
     printNode(&head1);  
