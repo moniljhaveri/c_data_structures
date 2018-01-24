@@ -403,6 +403,29 @@ int iterativeEvenOddLinkedList(node **head){
     }
     return 0;  
 }
+node* efficientMergeSort(node **head1, node **head2){
+    node *curr1 = *head1; 
+    node *curr2 = *head2; 
+    node *itPtr = curr1->data < curr2->data ? curr1 : curr2; 
+    node *returnPtr = itPtr; 
+    node *largePtr = curr1->data < curr2->data ? curr2 : curr1; 
+    node *prev = NULL; 
+    while(itPtr){
+        if(itPtr->data > largePtr->data){
+            prev->next = largePtr; 
+            node *tmpPtr = itPtr; 
+            itPtr = largePtr; 
+            largePtr = tmpPtr; 
+        }
+        prev = itPtr; 
+        itPtr = itPtr->next; 
+    }
+    if(largePtr){
+        prev->next = largePtr; 
+    }
+    return  returnPtr; 
+}
+
 void insertOrdered(node **head, int data)
 {
     node *curr = *head; 
@@ -420,9 +443,8 @@ void insertOrdered(node **head, int data)
     }
     newNode->next = prev->next; 
     prev->next = newNode; 
-    
-
 }
+
 void mergSortedLists(node **list1, node **list2){
     node *curr1 = *list1; 
     while(curr1){
@@ -442,10 +464,15 @@ static char *problem31(){
     node *head1 = createNode(3);
     addBeginning(4, &head1);
     addBeginning(5, &head1);
+    addBeginning(6, &head1);
+    addBeginning(7, &head1);
+    addBeginning(7, &head1);
+    addBeginning(13, &head1);
     reverseLinkedList(&head1); 
-    mergSortedLists(&head, &head1);
+    //mergSortedLists(&head, &head1);
+    node *head3 = efficientMergeSort(&head, &head1); 
     printf("Test merge\n");
-    printNode(&head1);  
+    printNode(&head3);  
     return 0; 
 
 }
