@@ -452,6 +452,32 @@ void mergSortedLists(node **list1, node **list2){
         curr1 = curr1->next; 
     }
 }
+
+void recursivereverseTwoLinkedList(node **head){
+    // this is simple there is a better way to do this 
+    node *curr = *head; 
+    if(!curr){
+        return; 
+    }
+    recursivereverseTwoLinkedList(&curr->next->next);  
+    int tmp = curr->data; 
+    curr->data = curr->next->data; 
+    curr->next->data = tmp; 
+    
+}
+
+static char *problem32(){
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(10, &head);
+    addBeginning(11, &head);
+    addBeginning(12, &head);
+    recursivereverseTwoLinkedList(&head); 
+    printf("problem 32\n"); 
+    printNode(&head);  
+}
+
 static char *problem31(){ 
     node *head = createNode(0);
     addBeginning(1, &head);
@@ -677,6 +703,7 @@ static char *run_problem_tests()
     mu_run_test(problem28);
     mu_run_test(problem29);
     mu_run_test(problem31);
+    mu_run_test(problem32);
     return 0;
 }
 
