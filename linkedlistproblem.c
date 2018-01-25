@@ -465,6 +465,16 @@ void recursivereverseTwoLinkedList(node **head){
     curr->next->data = tmp; 
     
 }
+void itertativeReverseTwoNodeList(node **head){
+    node *curr = *head; 
+    while(curr){
+        int tmp = curr->data; 
+        curr->data = curr->next->data; 
+        curr->next->data = tmp; 
+        curr = curr->next->next;
+    }
+
+}
 
 static char *problem32(){
     node *head = createNode(0);
@@ -473,7 +483,8 @@ static char *problem32(){
     addBeginning(10, &head);
     addBeginning(11, &head);
     addBeginning(12, &head);
-    recursivereverseTwoLinkedList(&head); 
+    //recursivereverseTwoLinkedList(&head); 
+    itertativeReverseTwoNodeList(&head); 
     printf("problem 32\n"); 
     printNode(&head);  
 }
