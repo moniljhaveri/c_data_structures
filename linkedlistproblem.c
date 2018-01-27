@@ -498,27 +498,34 @@ void iterativeTwoNodeReverse(node **head){
     prev->next = curr; 
 
 }
-node *splitLinkedList(node **head){
+node *splitCircularLinkedList(node **head){
+    node *copy = *head;
     node *slowPtr = *head; 
     node *fastPtr = *head; 
-    while(fastPtr && fastPtr->next){
+    do{
         slowPtr = slowPtr->next; 
+        if(fastPtr->next->next == copy){
+            fastPtr = fastPtr->next; 
+            break; 
+        }
         fastPtr = fastPtr->next->next; 
+
     }
+    while((fastPtr != copy)  && (fastPtr->next != copy));
     node *tmp = slowPtr->next; 
-    slowPtr->next = NULL; 
+    slowPtr->next = copy; 
+    fastPtr->next = tmp; 
     return tmp; 
 }
 
 static char *problem35(){
-    node *head = createNode(0);
-    addBeginning(1, &head);
-    addBeginning(2, &head);
-    addBeginning(10, &head);
-    addBeginning(11, &head);
-    addBeginning(12, &head);
-    addBeginning(13, &head);
-    node *splitHead = splitLinkedList(&head); 
+    node *head = createCircularList(0);
+    addToCircularList(1, &head); 
+    addToCircularList(2, &head); 
+    addToCircularList(3, &head); 
+    addToCircularList(4, &head); 
+    reverseLinkedList(&head); 
+    node *splitHead = splitCircularLinkedList(&head); 
     printf("head\n"); 
     printNode(&head);  
     printf("splitHead\n"); 
