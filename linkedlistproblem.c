@@ -517,6 +517,42 @@ node *splitCircularLinkedList(node **head){
     fastPtr->next = tmp; 
     return tmp; 
 }
+int isPalindrome(node **head){
+    node *slowPtr = *head; 
+    node *fastPtr = *head;  
+    node *curr = *head;   
+    while(fastPtr && fastPtr->next){
+        fastPtr = fastPtr->next->next; 
+        slowPtr = slowPtr->next; 
+    }
+    node *tmp = copyLinkedList(&slowPtr);
+    reverseLinkedList(&tmp); 
+    while(curr != slowPtr){
+       if(tmp->data != curr->data){
+           return 0;
+       } 
+       tmp = tmp->next; 
+       curr = curr->next; 
+    }
+    return 1; 
+
+}
+static char *problem37(){
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    addBeginning(4, &head);
+    addBeginning(3, &head);
+    addBeginning(2, &head);
+    addBeginning(1, &head);
+    addBeginning(0, &head);
+    mu_assert("error 1 != isPalindrome", 1 == isPalindrome(&head));
+    return 0; 
+
+}
 
 static char *problem35(){
     node *head = createCircularList(0);
@@ -761,6 +797,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem37);
     mu_run_test(problem1);
     mu_run_test(problem2);
     mu_run_test(problem6);
