@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "SinglyLinkedList.h"
-#include <math.h> 
+#include <math.h>
 #include "minunit.h"
 int tests_run = 0;
 typedef struct Stack
@@ -102,7 +102,7 @@ int checkForCircular(node **head)
             return 1;
         }
     }
-    return 0; 
+    return 0;
 }
 int fastStartCircularNode(node **head)
 {
@@ -259,285 +259,329 @@ void reverseLinkedList(node **head)
     curr->next = prev;
     *head = curr;
 }
-void recursiveReverseLinkedList(node **head, node **prev, node** head_ptr){
+void recursiveReverseLinkedList(node **head, node **prev, node **head_ptr)
+{
     node *curr = *head;
-    if(curr == NULL){
-        return; 
+    if (curr == NULL)
+    {
+        return;
     }
-    node *next= curr->next;
+    node *next = curr->next;
     node *p = *prev;
-    if(p->data == -1){
-        p = NULL;  
+    if (p->data == -1)
+    {
+        p = NULL;
     }
-    if(curr->next == NULL){
-        *head_ptr = curr; 
+    if (curr->next == NULL)
+    {
+        *head_ptr = curr;
     }
-    curr->next = p; 
-    recursiveReverseLinkedList(&next, &curr, &*head_ptr); 
-
+    curr->next = p;
+    recursiveReverseLinkedList(&next, &curr, &*head_ptr);
 }
 
-void createBranchList(node **head, node** end, int position){
+void createBranchList(node **head, node **end, int position)
+{
     node *endNode = *end;
-    node *curr = *head; 
-    int count = 0; 
-    while(endNode->next){
+    node *curr = *head;
+    int count = 0;
+    while (endNode->next)
+    {
         endNode = endNode->next;
     }
-    while(position != count){
-        curr = curr->next; 
-        count++; 
+    while (position != count)
+    {
+        curr = curr->next;
+        count++;
     }
-    endNode->next = curr; 
+    endNode->next = curr;
 }
-int findIntersectionNode(node** head1, node ** head2){
+int findIntersectionNode(node **head1, node **head2)
+{
     node *curr1 = *head1;
-    while(curr1){
-        node *curr2 = *head2; 
-        while(curr2){
-            if (curr1 == curr2){
-                return curr1->data; 
+    while (curr1)
+    {
+        node *curr2 = *head2;
+        while (curr2)
+        {
+            if (curr1 == curr2)
+            {
+                return curr1->data;
             }
-            curr2 = curr2->next; 
+            curr2 = curr2->next;
         }
-        curr1 = curr1->next; 
+        curr1 = curr1->next;
     }
-    return 0; 
-
+    return 0;
 }
-int fastIntersectionNode(node ** head1, node** head2){
-    int count1 = 0;  
-    int count2 = 0; 
-    node *curr1 = *head1; 
+int fastIntersectionNode(node **head1, node **head2)
+{
+    int count1 = 0;
+    int count2 = 0;
+    node *curr1 = *head1;
     node *curr2 = *head2;
 
-    while(curr1){
-        count1++; 
-        curr1 = curr1->next; 
+    while (curr1)
+    {
+        count1++;
+        curr1 = curr1->next;
     }
-    while(curr2){
-        count2++; 
-        curr2 = curr2->next; 
+    while (curr2)
+    {
+        count2++;
+        curr2 = curr2->next;
     }
-    node *largestList = (count1 > count2) ? *head1 : *head2; 
-    node *smallestList = (count1 < count2) ? *head1 : *head2; 
-    int numSteps = abs(count1 - count2); 
-    for(int i = 0; i < numSteps; i++){
+    node *largestList = (count1 > count2) ? *head1 : *head2;
+    node *smallestList = (count1 < count2) ? *head1 : *head2;
+    int numSteps = abs(count1 - count2);
+    for (int i = 0; i < numSteps; i++)
+    {
         largestList = largestList->next;
     }
-    while(largestList){
-        if(largestList == smallestList){
-            return smallestList->data; 
-        }
-        largestList = largestList->next; 
-        smallestList = smallestList->next; 
-    }
-
-    return 0; 
-}
-
-int findMiddleLinkedList(node **head){
-    node *slowPtr = *head; 
-    node *fastPtr = *head; 
-    while(fastPtr && fastPtr->next){
-        slowPtr = slowPtr->next; 
-        fastPtr = fastPtr->next->next; 
-    }
-    return slowPtr->data; 
-}
-
-void addNodeEnd(node **head, int data){
-    node *curr = *head; 
-    while(curr->next){
-        curr = curr->next; 
-    }
-    node *newNode = createNode(data);     
-    curr->next = newNode; 
-} 
-
-node *copyLinkedList(node **head){
-    node *curr = *head; 
-    node *newList = createNode(curr->data); 
-    curr = curr->next; 
-    while(curr)
+    while (largestList)
     {
-        addNodeEnd(&newList, curr->data); 
-        curr = curr->next;     
+        if (largestList == smallestList)
+        {
+            return smallestList->data;
+        }
+        largestList = largestList->next;
+        smallestList = smallestList->next;
     }
-    return newList; 
 
+    return 0;
 }
 
-void displayNodeFromEnd(node **head){
-    node *copiedList = copyLinkedList(head); 
+int findMiddleLinkedList(node **head)
+{
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    while (fastPtr && fastPtr->next)
+    {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
+    }
+    return slowPtr->data;
+}
+
+void addNodeEnd(node **head, int data)
+{
+    node *curr = *head;
+    while (curr->next)
+    {
+        curr = curr->next;
+    }
+    node *newNode = createNode(data);
+    curr->next = newNode;
+}
+
+node *copyLinkedList(node **head)
+{
+    node *curr = *head;
+    node *newList = createNode(curr->data);
+    curr = curr->next;
+    while (curr)
+    {
+        addNodeEnd(&newList, curr->data);
+        curr = curr->next;
+    }
+    return newList;
+}
+
+void displayNodeFromEnd(node **head)
+{
+    node *copiedList = copyLinkedList(head);
     reverseLinkedList(&copiedList);
-    while(copiedList){
+    while (copiedList)
+    {
         printf("%i\n", copiedList->data);
-        copiedList = copiedList->next; 
-
+        copiedList = copiedList->next;
     }
-} 
-void printReverseLinkedList(node **head){
-    if(!*head){
-        return; 
+}
+void printReverseLinkedList(node **head)
+{
+    if (!*head)
+    {
+        return;
     }
-    printReverseLinkedList(&(*head)->next); 
-    printf("%d \n", (*head)->data); 
-
+    printReverseLinkedList(&(*head)->next);
+    printf("%d \n", (*head)->data);
 }
 
-int recursiveEvenOddLinkedList(node **head, int count){
-    if(!*head){
-        return (count%2); 
+int recursiveEvenOddLinkedList(node **head, int count)
+{
+    if (!*head)
+    {
+        return (count % 2);
     }
-    return recursiveEvenOddLinkedList(&(*head)->next, ++count); 
-
+    return recursiveEvenOddLinkedList(&(*head)->next, ++count);
 }
-int iterativeEvenOddLinkedList(node **head){
-    node *curr = *head; 
-    while(curr && curr->next){
+int iterativeEvenOddLinkedList(node **head)
+{
+    node *curr = *head;
+    while (curr && curr->next)
+    {
         curr = curr->next->next;
     }
-    if(curr){
-        return 1; 
+    if (curr)
+    {
+        return 1;
     }
-    return 0;  
+    return 0;
 }
-node* efficientMergeSort(node **head1, node **head2){
-    node *curr1 = *head1; 
-    node *curr2 = *head2; 
-    node *itPtr = curr1->data < curr2->data ? curr1 : curr2; 
-    node *returnPtr = itPtr; 
-    node *largePtr = curr1->data < curr2->data ? curr2 : curr1; 
-    node *prev = NULL; 
-    while(itPtr){
-        if(itPtr->data > largePtr->data){
-            prev->next = largePtr; 
-            node *tmpPtr = itPtr; 
-            itPtr = largePtr; 
-            largePtr = tmpPtr; 
+node *efficientMergeSort(node **head1, node **head2)
+{
+    node *curr1 = *head1;
+    node *curr2 = *head2;
+    node *itPtr = curr1->data < curr2->data ? curr1 : curr2;
+    node *returnPtr = itPtr;
+    node *largePtr = curr1->data < curr2->data ? curr2 : curr1;
+    node *prev = NULL;
+    while (itPtr)
+    {
+        if (itPtr->data > largePtr->data)
+        {
+            prev->next = largePtr;
+            node *tmpPtr = itPtr;
+            itPtr = largePtr;
+            largePtr = tmpPtr;
         }
-        prev = itPtr; 
-        itPtr = itPtr->next; 
+        prev = itPtr;
+        itPtr = itPtr->next;
     }
-    if(largePtr){
-        prev->next = largePtr; 
+    if (largePtr)
+    {
+        prev->next = largePtr;
     }
-    return  returnPtr; 
+    return returnPtr;
 }
 
 void insertOrdered(node **head, int data)
 {
-    node *curr = *head; 
-    node *prev = NULL; 
-    node *newNode = createNode(data); 
-
-    if (data < curr->data){
-        newNode->next = curr; 
-        *head = newNode;
-        return; 
-    }
-    while(curr && (data > curr->data)){
-        prev = curr; 
-        curr = curr->next; 
-    }
-    newNode->next = prev->next; 
-    prev->next = newNode; 
-}
-
-void mergSortedLists(node **list1, node **list2){
-    node *curr1 = *list1; 
-    while(curr1){
-        insertOrdered(list2, curr1->data); 
-        curr1 = curr1->next; 
-    }
-}
-
-void recursivereverseTwoLinkedList(node **head){
-    // this is simple there is a better way to do this 
-    node *curr = *head; 
-    if(!curr){
-        return; 
-    }
-    recursivereverseTwoLinkedList(&curr->next->next);  
-    int tmp = curr->data; 
-    curr->data = curr->next->data; 
-    curr->next->data = tmp; 
-    
-}
-
-void itertativeReverseTwoNodeList(node **head){
-    node *curr = *head; 
+    node *curr = *head;
     node *prev = NULL;
-    while(curr && curr->next){
-        int tmp = curr->data; 
-        curr->data = curr->next->data; 
-        curr->next->data = tmp; 
+    node *newNode = createNode(data);
+
+    if (data < curr->data)
+    {
+        newNode->next = curr;
+        *head = newNode;
+        return;
+    }
+    while (curr && (data > curr->data))
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+    newNode->next = prev->next;
+    prev->next = newNode;
+}
+
+void mergSortedLists(node **list1, node **list2)
+{
+    node *curr1 = *list1;
+    while (curr1)
+    {
+        insertOrdered(list2, curr1->data);
+        curr1 = curr1->next;
+    }
+}
+
+void recursivereverseTwoLinkedList(node **head)
+{
+    // this is simple there is a better way to do this
+    node *curr = *head;
+    if (!curr)
+    {
+        return;
+    }
+    recursivereverseTwoLinkedList(&curr->next->next);
+    int tmp = curr->data;
+    curr->data = curr->next->data;
+    curr->next->data = tmp;
+}
+
+void itertativeReverseTwoNodeList(node **head)
+{
+    node *curr = *head;
+    node *prev = NULL;
+    while (curr && curr->next)
+    {
+        int tmp = curr->data;
+        curr->data = curr->next->data;
+        curr->next->data = tmp;
         prev = curr;
         curr = curr->next->next;
     }
 }
 
-void iterativeTwoNodeReverse(node **head){
-    node *curr = *head; 
-    int count = 0; 
-    node *tmp; 
-    node *prev = NULL; 
-    while(curr && curr->next){
-        if(!count){
-            *head = curr->next; 
+void iterativeTwoNodeReverse(node **head)
+{
+    node *curr = *head;
+    int count = 0;
+    node *tmp;
+    node *prev = NULL;
+    while (curr && curr->next)
+    {
+        if (!count)
+        {
+            *head = curr->next;
             count++;
         }
-        tmp = curr->next; 
-        curr->next = curr->next->next; 
-        tmp->next = curr; 
-        prev = curr; 
-        curr = curr->next; 
-        prev->next = curr->next; 
+        tmp = curr->next;
+        curr->next = curr->next->next;
+        tmp->next = curr;
+        prev = curr;
+        curr = curr->next;
+        prev->next = curr->next;
     }
-    prev->next = curr; 
-
+    prev->next = curr;
 }
-node *splitCircularLinkedList(node **head){
+node *splitCircularLinkedList(node **head)
+{
     node *copy = *head;
-    node *slowPtr = *head; 
-    node *fastPtr = *head; 
-    do{
-        slowPtr = slowPtr->next; 
-        if(fastPtr->next->next == copy){
-            fastPtr = fastPtr->next; 
-            break; 
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    do
+    {
+        slowPtr = slowPtr->next;
+        if (fastPtr->next->next == copy)
+        {
+            fastPtr = fastPtr->next;
+            break;
         }
-        fastPtr = fastPtr->next->next; 
+        fastPtr = fastPtr->next->next;
 
-    }
-    while((fastPtr != copy)  && (fastPtr->next != copy));
-    node *tmp = slowPtr->next; 
-    slowPtr->next = copy; 
-    fastPtr->next = tmp; 
-    return tmp; 
+    } while ((fastPtr != copy) && (fastPtr->next != copy));
+    node *tmp = slowPtr->next;
+    slowPtr->next = copy;
+    fastPtr->next = tmp;
+    return tmp;
 }
-int isPalindrome(node **head){
-    node *slowPtr = *head; 
-    node *fastPtr = *head;  
-    node *curr = *head;   
-    while(fastPtr && fastPtr->next){
-        fastPtr = fastPtr->next->next; 
-        slowPtr = slowPtr->next; 
+int isPalindrome(node **head)
+{
+    node *slowPtr = *head;
+    node *fastPtr = *head;
+    node *curr = *head;
+    while (fastPtr && fastPtr->next)
+    {
+        fastPtr = fastPtr->next->next;
+        slowPtr = slowPtr->next;
     }
     node *tmp = copyLinkedList(&slowPtr);
-    reverseLinkedList(&tmp); 
-    while(curr != slowPtr){
-       if(tmp->data != curr->data){
-           return 0;
-       } 
-       tmp = tmp->next; 
-       curr = curr->next; 
+    reverseLinkedList(&tmp);
+    while (curr != slowPtr)
+    {
+        if (tmp->data != curr->data)
+        {
+            return 0;
+        }
+        tmp = tmp->next;
+        curr = curr->next;
     }
-    return 1; 
-
+    return 1;
 }
-static char *problem37(){
+static char *problem37()
+{
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
@@ -550,26 +594,32 @@ static char *problem37(){
     addBeginning(1, &head);
     addBeginning(0, &head);
     mu_assert("error 1 != isPalindrome", 1 == isPalindrome(&head));
-    return 0; 
-
+    return 0;
 }
 
-static char *problem35(){
+static char *problem35()
+{
     node *head = createCircularList(0);
-    addToCircularList(1, &head); 
-    addToCircularList(2, &head); 
-    addToCircularList(3, &head); 
-    addToCircularList(4, &head); 
-    reverseLinkedList(&head); 
-    node *splitHead = splitCircularLinkedList(&head); 
-    printf("head\n"); 
-    printNode(&head);  
-    printf("splitHead\n"); 
-    printNode(&splitHead);  
-
+    addToCircularList(1, &head);
+    addToCircularList(2, &head);
+    addToCircularList(3, &head);
+    addToCircularList(4, &head);
+    //reverseLinkedList(&head);
+    node *splitHead = splitCircularLinkedList(&head);
+    int *headInt = returnNodeArr(3, &head);
+    int *splitInt = returnNodeArr(2, &splitHead);
+    int ansArr[2];
+    int headExp[3] = {4, 3, 2};
+    int splitExp[2] = {1, 0};
+    ansArr[0] = mu_arr_assert(3, headExp, headInt);
+    ansArr[1] = mu_arr_assert(2, splitExp, splitInt);
+    mu_assert("error head != 1", 1 == ansArr[0]);
+    mu_assert("error split != 1", 1 == ansArr[1]);
+    return 0;
 }
 
-static char *problem32(){
+static char *problem32()
+{
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
@@ -577,23 +627,23 @@ static char *problem32(){
     addBeginning(11, &head);
     addBeginning(12, &head);
     addBeginning(13, &head);
-    //recursivereverseTwoLinkedList(&head); 
-    //itertativeReverseTwoNodeList(&head); 
-    reverseLinkedList(&head); 
-    printf("problem 32\n"); 
-    iterativeTwoNodeReverse(&head); 
-    printNode(&head);  
+    reverseLinkedList(&head);
+    iterativeTwoNodeReverse(&head);
+    int headExp[7] = {1, 0, 10, 2, 12, 11, 13};
+    int *headInt = returnNodeArr(7, &head);
+    mu_assert("error problem32", mu_arr_assert(7, headExp, headInt) == 1);
+    return 0;
 }
 
-static char *problem31(){ 
+static char *problem31()
+{
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
     addBeginning(10, &head);
     addBeginning(11, &head);
     addBeginning(12, &head);
-    reverseLinkedList(&head); 
-
+    reverseLinkedList(&head);
     node *head1 = createNode(3);
     addBeginning(4, &head1);
     addBeginning(5, &head1);
@@ -601,16 +651,17 @@ static char *problem31(){
     addBeginning(7, &head1);
     addBeginning(7, &head1);
     addBeginning(13, &head1);
-    reverseLinkedList(&head1); 
+    reverseLinkedList(&head1);
     //mergSortedLists(&head, &head1);
-    node *head3 = efficientMergeSort(&head, &head1); 
-    printf("Test merge\n");
-    printNode(&head3);  
-    return 0; 
-
+    int headExp[13] = {0, 1, 2, 3, 4, 5, 6, 7, 7, 10, 11, 12, 13};
+    node *head3 = efficientMergeSort(&head, &head1);
+    int *headInt = returnNodeArr(13, &head3);
+    mu_assert("error efficientMergeSort != 1", 1 == mu_arr_assert(13, headInt, headExp));
+    return 0;
 }
 
-static char *problem29(){
+static char *problem29()
+{
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
@@ -622,33 +673,36 @@ static char *problem29(){
     addBeginning(6, &head);
     mu_assert("error 1 != recursiveEvenOddLinkedList", 1 == recursiveEvenOddLinkedList(&head, 0));
     mu_assert("error 1 != iterativeEvenoddlinkedlist", 1 == iterativeEvenOddLinkedList(&head));
-    return 0; 
+    return 0;
 }
 
-static char *problem28(){
+static char *problem28()
+{
     node *head = createNode(0);
     addBeginning(1, &head);
     addBeginning(2, &head);
     addBeginning(3, &head);
     addBeginning(4, &head);
     addBeginning(5, &head);
-    //displayNodeFromEnd(&head); 
-    printf("recursive solution \n"); 
-    printReverseLinkedList(&head); 
-    return 0; 
+    //displayNodeFromEnd(&head);
+    printf("recursive solution \n");
+    printReverseLinkedList(&head);
+    return 0;
 }
 
-static char *problem27() {
+static char *problem27()
+{
     node *head = createNode(1);
     addBeginning(2, &head);
     addBeginning(3, &head);
     addBeginning(4, &head);
     addBeginning(5, &head);
     mu_assert("error 3 != findMiddleLinkedList", 3 == findMiddleLinkedList(&head));
-    return 0; 
+    return 0;
 }
 
-static char *problem23(){
+static char *problem23()
+{
     node *head = createNode(1);
     addBeginning(2, &head);
     addBeginning(3, &head);
@@ -658,13 +712,13 @@ static char *problem23(){
     addBeginning(20, &shortHead);
     addBeginning(30, &shortHead);
     addBeginning(40, &shortHead);
-    createBranchList(&head, &shortHead, 2); 
+    createBranchList(&head, &shortHead, 2);
     mu_assert("error 3 != findIntersectionNode", 3 == fastIntersectionNode(&head, &shortHead));
-    return 0; 
-
+    return 0;
 }
 
-static char *problem17(){
+static char *problem17()
+{
     node *head = createNode(1);
     addBeginning(2, &head);
     addBeginning(3, &head);
@@ -674,11 +728,9 @@ static char *problem17(){
     addBeginning(20, &shortHead);
     addBeginning(30, &shortHead);
     addBeginning(40, &shortHead);
-    createBranchList(&head, &shortHead, 2); 
+    createBranchList(&head, &shortHead, 2);
     mu_assert("error 3 != findIntersectionNode", 3 == findIntersectionNode(&head, &shortHead));
-    return 0; 
-    
-
+    return 0;
 }
 static char *problem16()
 {
@@ -688,9 +740,10 @@ static char *problem16()
     addBeginning(3, &head);
     addBeginning(4, &head);
     addBeginning(5, &head);
-    //reverseLinkedList(&head);
-    recursiveReverseLinkedList(&head, &prev, &head); 
-    printNode(&head);
+    recursiveReverseLinkedList(&head, &prev, &head);
+    int headInt[5] = {1, 2, 3, 4, 5};
+    int *headExp = returnNodeArr(5, &head);
+    mu_assert("error problem16 != 1", 1 == mu_arr_assert(5, headInt, headExp));
     return 0;
 }
 
