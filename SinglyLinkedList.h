@@ -74,3 +74,20 @@ void printNode(node **head)
     }
     return;
 }
+
+int *returnNodeArr(int n, node **head)
+{
+    int *returnArr = (int *)malloc(sizeof(int) * n);
+    node *curr = *head;
+    for (int i = 0; i < n; i++)
+    {
+        if (!curr)
+        {
+            printf("Error: Linked List is null \n");
+            break;
+        }
+        returnArr[i] = curr->data;
+        curr = curr->next;
+    }
+    return returnArr;
+}
