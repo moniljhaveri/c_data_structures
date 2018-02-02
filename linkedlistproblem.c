@@ -580,6 +580,104 @@ int isPalindrome(node **head)
     }
     return 1;
 }
+
+void *reverseKNodes(int k, node **head, int size, int ind)
+{
+    node *curr = *head;
+    node *prev = NULL;
+    node *tmpPtr = *head;
+    node *tmp;
+    for (int i = 0; i < k; i++)
+    {
+        tmp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = tmp;
+        ind++;
+    }
+    if ((ind + k - 1) < size - 1)
+    {
+        for (int i = 0; i < k - 1; i++)
+        {
+            curr = curr->next;
+        }
+    }
+    (*head)->next = curr;
+}
+
+void k_prob_switch(int k, node **head)
+{
+    int count = 0;
+    int count1 = 0;
+    int size = 0;
+    int sw = 0;
+    node *curr = *head;
+    node *headPtr = *head;
+    node *tmpPtr = *head;
+    node *prev = NULL;
+
+    while (curr)
+    {
+        curr = curr->next;
+        size++;
+    }
+    curr = *head;
+    node *nodePtr;
+    for (int i = 1; i < k; i++)
+    {
+        tmpPtr = tmpPtr->next;
+    }
+    int mod = size / k;
+
+    while (count < mod)
+    {
+        prev = curr;
+        for (int i = 0; i < k; i++)
+        {
+            curr = curr->next;
+        }
+        reverseKNodes(k, &prev, size, count1);
+        count1 += k;
+        count += 1;
+    }
+    *head = tmpPtr;
+}
+static char *problem38()
+{
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    addBeginning(6, &head);
+    addBeginning(7, &head);
+    addBeginning(8, &head);
+    addBeginning(9, &head);
+    reverseLinkedList(&head);
+    node *head1 = createNode(1);
+    addBeginning(2, &head1);
+    addBeginning(3, &head1);
+    addBeginning(4, &head1);
+    addBeginning(5, &head1);
+    addBeginning(6, &head1);
+    addBeginning(7, &head1);
+    addBeginning(8, &head1);
+    addBeginning(9, &head1);
+    addBeginning(10, &head1);
+    reverseLinkedList(&head1);
+    k_prob_switch(3, &head);
+    k_prob_switch(4, &head1);
+    int headExp[10] = {2, 1, 0, 5, 4, 3, 8, 7, 6, 9};
+    int headExp1[10] = {4, 3, 2, 1, 8, 7, 6, 5, 9, 10};
+    int *headInt = returnNodeArr(10, &head);
+    int *headInt1 = returnNodeArr(10, &head1);
+    mu_assert("error problem38 k = 3", mu_arr_assert(10, headExp, headInt) == 1);
+    mu_assert("error problem38 k = 4", mu_arr_assert(10, headExp1, headInt1) == 1);
+
+    return 0;
+}
+
 static char *problem37()
 {
     node *head = createNode(0);
@@ -850,7 +948,6 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
-    mu_run_test(problem37);
     mu_run_test(problem1);
     mu_run_test(problem2);
     mu_run_test(problem6);
@@ -866,6 +963,8 @@ static char *run_problem_tests()
     mu_run_test(problem31);
     mu_run_test(problem32);
     mu_run_test(problem35);
+    mu_run_test(problem37);
+    mu_run_test(problem38);
     return 0;
 }
 
