@@ -65,6 +65,10 @@ void deleteNodeCircular(node **head)
     node *copy = *head;
     node *next = curr->next;
     node *prev = NULL;
+    if (curr->next == curr)
+    {
+        return;
+    }
     do
     {
         prev = curr;
