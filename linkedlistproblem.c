@@ -642,6 +642,44 @@ void k_prob_switch(int k, node **head)
     }
     *head = tmpPtr;
 }
+
+int josephusCircle(int n, int m, node **head)
+{
+    node *curr = *head;
+    int count = 1;
+    while (n > 1)
+    {
+        if ((count % m) == 0)
+        {
+            n--;
+            deleteNodeCircular(&curr);
+        }
+        else
+        {
+            curr = curr->next;
+        }
+        count++;
+    }
+    return curr->data;
+}
+
+static char *problem40()
+{
+    node *head = createCircularList(0);
+    addToCircularList(1, &head);
+    addToCircularList(2, &head);
+    addToCircularList(3, &head);
+    addToCircularList(4, &head);
+    addToCircularList(5, &head);
+    addToCircularList(6, &head);
+    addToCircularList(7, &head);
+    addToCircularList(8, &head);
+    addToCircularList(9, &head);
+    addToCircularList(10, &head);
+    mu_assert("error problem40 k != 4", josephusCircle(11, 2, &head) == 4);
+    return 0;
+}
+
 static char *problem38()
 {
     node *head = createNode(0);
@@ -965,6 +1003,7 @@ static char *run_problem_tests()
     mu_run_test(problem35);
     mu_run_test(problem37);
     mu_run_test(problem38);
+    mu_run_test(problem40);
     return 0;
 }
 
