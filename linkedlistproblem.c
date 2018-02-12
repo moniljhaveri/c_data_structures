@@ -663,6 +663,17 @@ int josephusCircle(int n, int m, node **head)
     return curr->data;
 }
 
+static char *problem42()
+{
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    return 0;
+}
+
 static char *problem40()
 {
     node *head = createCircularList(0);
@@ -1004,6 +1015,8 @@ static char *run_problem_tests()
     mu_run_test(problem37);
     mu_run_test(problem38);
     mu_run_test(problem40);
+    mu_run_test(problem40);
+    mu_run_test(problem42);
     return 0;
 }
 
