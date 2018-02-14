@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "SinglyLinkedList.h"
+#include "RandomizedLinkList.h"
 #include <math.h>
 #include "minunit.h"
 int tests_run = 0;
@@ -663,14 +664,30 @@ int josephusCircle(int n, int m, node **head)
     return curr->data;
 }
 
+rand_node *copyRandNode(rand_node *node)
+{
+    rand_node *newNode = (rand_node *)malloc(sizeof(rand_node));
+
+    newNode->data = node->data;
+    newNode->next = NULL;
+
+    return newNode;
+}
+
+rand_node *copyRandLinkedList(rand_node **head)
+{
+    rand_node *newNode;
+    rand_node *curr = *head;
+    while (curr)
+    {
+        rand_node *tmp = copyRandNode(curr);
+    }
+}
+
 static char *problem42()
 {
-    node *head = createNode(0);
-    addBeginning(1, &head);
-    addBeginning(2, &head);
-    addBeginning(3, &head);
-    addBeginning(4, &head);
-    addBeginning(5, &head);
+    rand_node *head = createRandLinkList(4);
+    printRandNode(&head);
     return 0;
 }
 
