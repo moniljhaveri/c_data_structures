@@ -58,4 +58,17 @@ void printRandNode(rand_node **head)
 
     return;
 }
+
+char *returnRandNodeArr(int n, rand_node **head)
+{
+    int *arr = (int *)malloc(sizeof(int) * n * 2);
+    rand_node *curr = *head;
+    for (int i = 0; i < 2 * n - 1; i = i + 2)
+    {
+        arr[i] = curr->data;
+        arr[i + 1] = curr->rand->next;
+        curr = curr->next;
+    }
+    return arr;
+}
 #endif
