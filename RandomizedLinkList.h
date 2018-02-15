@@ -66,7 +66,7 @@ char *returnRandNodeArr(int n, rand_node **head)
     for (int i = 0; i < 2 * n - 1; i = i + 2)
     {
         arr[i] = curr->data;
-        arr[i + 1] = curr->rand->next;
+        arr[i + 1] = curr->rand->data;
         curr = curr->next;
     }
     return arr;

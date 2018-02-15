@@ -716,8 +716,9 @@ static char *problem42()
 {
     rand_node *head = createRandLinkList(4);
     rand_node *copyHead = copyRandLinkedList(&head);
-    printRandNode(&head);
-    printRandNode(&copyHead);
+    int *arr = returnRandNodeArr(4, &head);
+    int *arrCopy = returnRandNodeArr(4, &copyHead);
+    mu_assert("error problem42 ", mu_arr_assert(8, arr, arrCopy) == 1);
     return 0;
 }
 
