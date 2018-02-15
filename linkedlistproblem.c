@@ -678,16 +678,46 @@ rand_node *copyRandLinkedList(rand_node **head)
 {
     rand_node *newNode;
     rand_node *curr = *head;
+    newNode = copyRandNode(curr);
+    rand_node *cpy = newNode;
+    curr = curr->next;
     while (curr)
     {
         rand_node *tmp = copyRandNode(curr);
+        newNode->next = tmp;
+        newNode = newNode->next;
+        curr = curr->next;
     }
+
+    curr = *head;
+    newNode = cpy;
+    while (curr)
+    {
+        int count = 0;
+        rand_node *tmp = *head;
+        while (tmp != curr->rand)
+        {
+            tmp = tmp->next;
+            count++;
+        }
+        rand_node *tmpCpy = cpy;
+        for (int i = 0; i < count; i++)
+        {
+            tmpCpy = tmpCpy->next;
+        }
+        newNode->rand = tmpCpy;
+        curr = curr->next;
+        newNode = newNode->next;
+    }
+    return cpy;
 }
 
 static char *problem42()
 {
     rand_node *head = createRandLinkList(4);
+    rand_node *copyHead = copyRandLinkedList(&head);
     printRandNode(&head);
+    printRandNode(&copyHead);
     return 0;
 }
 
