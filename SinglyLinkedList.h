@@ -15,12 +15,25 @@ node *createNode(int data)
     nodeR->next = NULL;
     return nodeR;
 }
+
 void addBeginning(int data, node **head)
 {
     node *newNode = createNode(data);
     newNode->next = *head;
     *head = newNode;
 }
+
+void addEnd(int data, node **head)
+{
+    node *newNode = createNode(data);
+    node *curr = *head;
+    while (curr->next)
+    {
+        curr = curr->next;
+    }
+    curr->next = newNode;
+}
+
 void deleteBeginning(node **head)
 {
     if (*head == NULL)
