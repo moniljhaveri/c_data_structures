@@ -711,6 +711,41 @@ rand_node *copyRandLinkedList(rand_node **head)
     }
     return cpy;
 }
+node *simpleEvenOdd(node **head)
+{
+    node *curr = *head;
+    node *sortedList = createNode(curr->data);
+    curr = curr->next;
+    while (curr)
+    {
+        if ((curr->data % 2) == 0)
+        {
+            addBeginning(curr->data, &sortedList);
+        }
+        else
+        {
+
+            addEnd(curr->data, &sortedList);
+        }
+        curr = curr->next;
+    }
+    return sortedList;
+}
+
+static char *problem43()
+{
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    node *ans = simpleEvenOdd(&head);
+    int arr[5] = {0, 2, 4, 3, 1};
+    int *arrAns = returnNodeArr(5, &ans);
+
+    mu_assert("error problem43 ", mu_arr_assert(5, arr, arrAns) == 1);
+    return 0;
+}
 
 static char *problem42()
 {
@@ -1065,6 +1100,7 @@ static char *run_problem_tests()
     mu_run_test(problem40);
     mu_run_test(problem40);
     mu_run_test(problem42);
+    mu_run_test(problem43);
     return 0;
 }
 
