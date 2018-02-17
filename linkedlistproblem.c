@@ -732,6 +732,38 @@ node *simpleEvenOdd(node **head)
     return sortedList;
 }
 
+node *betterEvenOdd(node **head)
+{
+    node *curr = *head;
+    node *evenList = createNode(curr->data);
+    node *oddList = createNode(curr->data);
+    node **deleteFirst = ((curr->data) % 2 == 0) ? &oddList : &evenList;
+    curr = curr->next;
+    while (curr)
+    {
+        if ((curr->data % 2) == 0)
+        {
+            addBeginning(curr->data, &evenList);
+        }
+        else
+        {
+            addEnd(curr->data, &oddList);
+        }
+        curr = curr->next;
+    }
+
+    deleteBeginning(deleteFirst);
+    curr = evenList;
+
+    while (curr->next)
+    {
+        curr = curr->next;
+    }
+
+    curr->next = oddList;
+    return evenList;
+}
+
 static char *problem43()
 {
     node *head = createNode(0);
@@ -740,10 +772,13 @@ static char *problem43()
     addBeginning(3, &head);
     addBeginning(4, &head);
     node *ans = simpleEvenOdd(&head);
+    node *ansBetter = betterEvenOdd(&head);
     int arr[5] = {0, 2, 4, 3, 1};
     int *arrAns = returnNodeArr(5, &ans);
+    int *arrBett = returnNodeArr(5, &ansBetter);
 
-    mu_assert("error problem43 ", mu_arr_assert(5, arr, arrAns) == 1);
+    mu_assert("error problem43 simple", mu_arr_assert(5, arr, arrAns) == 1);
+    mu_assert("error problem43 better", mu_arr_assert(5, arrBett, arrAns) == 1);
     return 0;
 }
 
