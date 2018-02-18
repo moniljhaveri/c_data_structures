@@ -764,6 +764,36 @@ node *betterEvenOdd(node **head)
     return evenList;
 }
 
+int modularNode(int k, node **head)
+{
+    int count = 0;
+    node *curr = *head;
+    while (curr)
+    {
+        curr = curr->next;
+        count++;
+    }
+    int n = count % k;
+    curr = *head;
+    for (int i = 0; i < n * k; i++)
+    {
+        curr = curr->next;
+    }
+    return curr->data;
+}
+
+static char *problem45()
+{
+    node *head = createNode(0);
+    addBeginning(1, &head);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+
+    mu_assert("error problem45 k != 1", modularNode(2, &head));
+    return 0;
+}
+
 static char *problem43()
 {
     node *head = createNode(0);
@@ -1136,6 +1166,7 @@ static char *run_problem_tests()
     mu_run_test(problem40);
     mu_run_test(problem42);
     mu_run_test(problem43);
+    mu_run_test(problem45);
     return 0;
 }
 
