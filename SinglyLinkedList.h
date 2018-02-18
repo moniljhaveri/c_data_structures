@@ -52,6 +52,16 @@ void deleteBeginning(node **head)
     free(copyNode);
 }
 
+node *createListOfSize(int n)
+{
+    node *head = createNode(0);
+    for (int i = 1; i < n; i++)
+    {
+        addEnd(i, &head);
+    }
+    return head;
+}
+
 node *createCircularList(int data)
 {
     node *head = createNode(data);
