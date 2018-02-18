@@ -773,13 +773,39 @@ int modularNode(int k, node **head)
         curr = curr->next;
         count++;
     }
-    int n = count % k;
+    int n = count / k;
     curr = *head;
     for (int i = 0; i < n * k; i++)
     {
         curr = curr->next;
     }
     return curr->data;
+}
+int endModularNode(int k, node **head)
+{
+    int count = 0;
+    node *curr = *head;
+    while (curr)
+    {
+        curr = curr->next;
+        count++;
+    }
+    count -= k;
+    curr = *head;
+    for (int i = 0; i < count; i++)
+    {
+        curr = curr->next;
+    }
+
+    return curr->data;
+}
+
+static char *problem46()
+{
+    node *head = createListOfSize(19);
+
+    mu_assert("error problem 46  != 15", endModularNode(3, &head) == 15);
+    return 0;
 }
 
 static char *problem45()
@@ -790,7 +816,7 @@ static char *problem45()
     addBeginning(3, &head);
     addBeginning(4, &head);
 
-    mu_assert("error problem45 k != 1", modularNode(2, &head));
+    mu_assert("error problem45 k != 3", modularNode(2, &head) == 3);
     return 0;
 }
 
@@ -1167,6 +1193,7 @@ static char *run_problem_tests()
     mu_run_test(problem42);
     mu_run_test(problem43);
     mu_run_test(problem45);
+    mu_run_test(problem46);
     return 0;
 }
 
