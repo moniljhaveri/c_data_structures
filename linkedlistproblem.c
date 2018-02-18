@@ -804,7 +804,7 @@ static char *problem46()
 {
     node *head = createListOfSize(19);
 
-    mu_assert("error problem 46  != 15", endModularNode(3, &head) == 15);
+    mu_assert("error problem 46  != 16", endModularNode(3, &head) == 16);
     return 0;
 }
 
@@ -816,7 +816,7 @@ static char *problem45()
     addBeginning(3, &head);
     addBeginning(4, &head);
 
-    mu_assert("error problem45 k != 3", modularNode(2, &head) == 3);
+    mu_assert("error problem45 k != 3", modularNode(2, &head) == 0);
     return 0;
 }
 
