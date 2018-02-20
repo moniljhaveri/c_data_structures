@@ -800,6 +800,30 @@ int endModularNode(int k, node **head)
     return curr->data;
 }
 
+int squareRootNode(node **head)
+{
+    node *curr = *head;
+    double count = 0.0;
+    while (curr)
+    {
+        curr = curr->next;
+        count++;
+    }
+    int n = (int)sqrt(count);
+    curr = *head;
+    for (int i = 0; i < n; i++)
+    {
+        curr = curr->next;
+    }
+    return curr->data;
+}
+
+static char *problem47()
+{
+    node *head = createListOfSize(10);
+    return 0;
+}
+
 static char *problem46()
 {
     node *head = createListOfSize(19);
@@ -1194,6 +1218,7 @@ static char *run_problem_tests()
     mu_run_test(problem43);
     mu_run_test(problem45);
     mu_run_test(problem46);
+    mu_run_test(problem47);
     return 0;
 }
 
