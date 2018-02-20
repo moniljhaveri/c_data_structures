@@ -811,16 +811,19 @@ int squareRootNode(node **head)
     }
     int n = (int)sqrt(count);
     curr = *head;
-    for (int i = 0; i < n; i++)
+    int count1 = 0;
+    for (int i = 1; i < n; ++i)
     {
         curr = curr->next;
+        count1++;
     }
     return curr->data;
 }
 
 static char *problem47()
 {
-    node *head = createListOfSize(10);
+    node *head = createListOfSize(4);
+    mu_assert("error problem 47  != 1", squareRootNode(&head) == 1);
     return 0;
 }
 
