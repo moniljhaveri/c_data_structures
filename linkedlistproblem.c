@@ -820,6 +820,59 @@ int squareRootNode(node **head)
     return curr->data;
 }
 
+node *mergeList49(node **head1, node **head2)
+{
+    node *h1 = *head1;
+    node *h2 = *head2;
+
+    int c1 = 0;
+    int c2 = 0;
+
+    while (h1)
+    {
+        c1++;
+        h1 = h1->next;
+    }
+
+    while (h2)
+    {
+        c2++;
+        h2 = h2->next;
+    }
+
+    node *lHead = (c1 < c2) ? *head2 : *head1;
+    node *sHead = (c1 < c2) ? *head1 : *head2;
+    node *rHead = sHead;
+    node *prev;
+    while (sHead)
+    {
+
+        node *sTmp = sHead->next;
+        node *lTmp = lHead->next;
+        sHead->next = lHead;
+        lHead->next = sTmp;
+        prev = sHead;
+        sHead = sTmp;
+        lHead = lTmp;
+    }
+    prev = prev->next;
+    prev->next = lHead;
+
+    return rHead;
+}
+
+static char *problem49()
+{
+    node *head1 = createListOfSize(2);
+    reverseLinkedList(&head1);
+    node *head2 = createListOfSize(4);
+    node *ans = mergeList49(&head1, &head2);
+    int *arr = returnNodeArr(6, &ans);
+    int expArr[6] = {1, 0, 0, 1, 2, 3};
+    mu_assert("error problem 49  != 1", mu_arr_assert(6, expArr, arr) == 1);
+    return 0;
+}
+
 static char *problem47()
 {
     node *head = createListOfSize(4);
@@ -1222,6 +1275,7 @@ static char *run_problem_tests()
     mu_run_test(problem45);
     mu_run_test(problem46);
     mu_run_test(problem47);
+    mu_run_test(problem49);
     return 0;
 }
 
