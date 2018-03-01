@@ -860,6 +860,53 @@ node *mergeList49(node **head1, node **head2)
 
     return rHead;
 }
+void inplaceEvenOdd(node **head)
+{
+    node *curr = *head;
+    node *lastPtr;
+
+    int last = 0;
+
+    while (curr->next)
+    {
+        curr = curr->next;
+        lastPtr = curr;
+    }
+
+    curr = *head;
+    node *prev;
+
+    while (curr)
+    {
+        if (((curr->data % 2) != 0))
+        {
+            if (curr->data == last)
+            {
+                return;
+            }
+
+            last = curr->data;
+            node *tmp = curr->next;
+            curr->next = NULL;
+            lastPtr->next = curr;
+            lastPtr = curr;
+            prev->next = tmp;
+        }
+
+        prev = curr;
+        curr = curr->next;
+    }
+}
+
+static char *problem51()
+{
+    node *head = createListOfSize(6);
+    inplaceEvenOdd(&head);
+    printf("problem 51 \n");
+    printNode(&head);
+
+    return 0;
+}
 
 static char *problem49()
 {
@@ -1276,6 +1323,7 @@ static char *run_problem_tests()
     mu_run_test(problem46);
     mu_run_test(problem47);
     mu_run_test(problem49);
+    mu_run_test(problem51);
     return 0;
 }
 
