@@ -891,6 +891,7 @@ void inplaceEvenOdd(node **head)
             lastPtr->next = curr;
             lastPtr = curr;
             prev->next = tmp;
+            curr = tmp;
         }
 
         prev = curr;
@@ -903,7 +904,9 @@ static char *problem51()
     node *head = createListOfSize(6);
     inplaceEvenOdd(&head);
     printf("problem 51 \n");
-    printNode(&head);
+    int expArr[6] = {0, 2, 4, 1, 5, 3};
+    int *arr = returnNodeArr(6, &head);
+    mu_assert("error problem 51  != 1", mu_arr_assert(6, expArr, arr) == 1);
 
     return 0;
 }
