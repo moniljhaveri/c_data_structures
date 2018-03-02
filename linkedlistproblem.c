@@ -898,12 +898,58 @@ void inplaceEvenOdd(node **head)
         curr = curr->next;
     }
 }
+node *addInteger(node **h1, node **h2)
+{
+    node *head = createNode(0);
+
+    node *c1 = *h1;
+    node *c2 = *h2;
+    int sum = 0;
+    int carry = 0;
+    while (c1 || c2 || carry)
+    {
+        sum = 0;
+        sum = (c1) ? sum + c1->data : sum;
+        sum = (c2) ? sum + c2->data : sum;
+        sum += carry;
+        carry = sum / 10;
+        sum = sum % 10;
+        addEnd(sum, &head);
+
+        if (c1)
+        {
+            c1 = c1->next;
+        }
+
+        if (c2)
+        {
+            c2 = c2->next;
+        }
+    }
+    deleteBeginning(&head);
+
+    return head;
+}
+static char *problem52()
+{
+    node *l1 = createNode(9);
+    addBeginning(9, &l1);
+    node *l2 = createNode(1);
+    addBeginning(1, &l2);
+    addBeginning(1, &l2);
+    node *ans = addInteger(&l1, &l2);
+    int expArr[3] = {0,
+                     1,
+                     2};
+    int *arr = returnNodeArr(3, &ans);
+    mu_assert("error problem 52 != 1", mu_arr_assert(3, expArr, arr) == 1);
+    return 0;
+}
 
 static char *problem51()
 {
     node *head = createListOfSize(6);
     inplaceEvenOdd(&head);
-    printf("problem 51 \n");
     int expArr[6] = {0, 2, 4, 1, 5, 3};
     int *arr = returnNodeArr(6, &head);
     mu_assert("error problem 51  != 1", mu_arr_assert(6, expArr, arr) == 1);
@@ -1327,6 +1373,7 @@ static char *run_problem_tests()
     mu_run_test(problem47);
     mu_run_test(problem49);
     mu_run_test(problem51);
+    mu_run_test(problem52);
     return 0;
 }
 
