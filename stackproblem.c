@@ -31,6 +31,21 @@ int paranthesisChecker(int n, int  *arr)
     return 0;
 }
 
+static char* problem4()
+{
+    //do in c++ or come back to 
+    return 0; 
+}
+static char* problem3()
+{
+    //do in c++ or come back to 
+    return 0; 
+}
+static char* problem2()
+{
+    //do in c++ or come back to 
+    return 0; 
+}
 static char* problem1()
 {
     //do in c++ or come back to 
