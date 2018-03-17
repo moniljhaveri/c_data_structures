@@ -24,12 +24,54 @@ static char *testStackClass()
     return 0; 
 }
 
-int paranthesisChecker(int n, int  *arr)
+int getMin(Stack *minStack)
 {
-    Stack *stack = createStack(); 
-
-    return 0;
+    return top(minStack);     
 }
+
+void minPush(int data, Stack *mainStack, Stack *minStack)
+{
+    if(returnSize(minStack) == 0)
+    {
+        push(data, minStack); 
+    }
+    push(data, mainStack); 
+    if(data < top(minStack))
+    {
+        push(data, minStack); 
+    }
+}
+void minPop(Stack *mainStack, Stack *minStack)
+{
+    if(returnIdx(mainStack) == 0)
+    {
+        return;  
+    }
+    pop(mainStack); 
+    if(top(mainStack) < top(minStack))
+    {
+        push(top(mainStack), minStack); 
+    }
+}
+
+static char* problem5()
+{
+    Stack *mainStack = createStack(); 
+    Stack *minStack = createStack(); 
+    minStack->data[0] =  2147483647;
+    minStack->data[1] =  2147483647;
+    minPush(10, mainStack, minStack); 
+    minPush(13, mainStack, minStack); 
+    minPush(14, mainStack, minStack); 
+    minPush(1, mainStack, minStack); 
+    minPush(3, mainStack, minStack); 
+    mu_assert("minTop 1 == 1", top(minStack) == 1); 
+    minPop(mainStack, minStack); 
+    mu_assert("minTop 3 == 3", top(minStack) == 3); 
+
+    return 0; 
+}
+
 
 static char* problem4()
 {
@@ -56,6 +98,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem5); 
     mu_run_test(testStackClass); 
     return 0; 
 }
