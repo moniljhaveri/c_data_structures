@@ -70,6 +70,10 @@ void push(int data, Stack *stack)
 
 int top(Stack *stack)
 {
+    if(stack->idx){
+
+    return stack->data[stack->idx - 1]; 
+    }
     return stack->data[stack->idx]; 
 }
 
