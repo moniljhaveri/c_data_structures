@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include "Stack.h" 
+#include "SinglyLinkedList.h"
 #include "minunit.h"
 
 int tests_run = 0;
@@ -83,12 +84,59 @@ int checkPalindrone(int *arr)
     return 1; 
 }
 
+int llCheckPalindrome(int n, node **head)
+{
+    node *curr = *head; 
+    Stack *stack = createStack(); 
+    for(int i = 0; i < (n/2 + 1); i++)
+    {
+        push(curr->data, stack); 
+        if(i == (n/2))
+        {
+            //ugly code rewrite 
+            break; 
+        }
+        curr = curr->next; 
+    }
+
+    while(curr){
+        if(curr->data != top(stack))
+        {
+            return 0; 
+        }
+        curr = curr->next; 
+        pop(stack); 
+    }
+    return 1; 
+}
+
+
+static char* problem9()
+{ 
+    //do problem 8 using linkedLists 
+    node *cll = createNode(1); 
+    addBeginning(2, &cll); 
+    addBeginning(3, &cll); 
+    addBeginning(2, &cll); 
+    addBeginning(1, &cll); 
+
+    node *ll = createNode(1); 
+    addBeginning(2, &ll); 
+    addBeginning(3, &ll); 
+    addBeginning(2, &ll); 
+    addBeginning(3, &ll); 
+    mu_assert("cll 1 == 1", (llCheckPalindrome(5, &cll) == 1)); 
+    mu_assert("ll 0 == 0", (llCheckPalindrome(5, &ll) == 0)); 
+    return 0; 
+}
+
 static char* problem8()
 {
     int corrArr[7] = {1, 2, 3, 'X', 3, 2, 1}; 
     int incArr[7] = {1, 2, 3, 'X', 4, 2, 1}; 
     mu_assert("corrArr 1 == 1", checkPalindrone(corrArr) == 1); 
     mu_assert("incArr 0 == 0", checkPalindrone(incArr) == 0); 
+    return 0; 
 }
 
 static char* problem5()
@@ -137,6 +185,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem9); 
     mu_run_test(problem8); 
     mu_run_test(problem5); 
     mu_run_test(testStackClass); 
