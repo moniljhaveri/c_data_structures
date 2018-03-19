@@ -60,8 +60,40 @@ void minPop(Stack *mainStack, Stack *minStack)
     }
 }
 
+int checkPalindrone(int *arr)
+{
+    int c = 0;  
+    Stack *newStack = createStack(); 
+    while((char)arr[c] != 'X')
+    {
+        push(arr[c], newStack); 
+        c++;  
+    }
+    int n = 2*c; 
+    c++; 
+    for(int i = c; i < n; ++i)
+    {
+        if(top(newStack) != arr[i])
+        {
+            return 0; 
+        }
+        pop(newStack); 
+    }
+
+    return 1; 
+}
+
+static char* problem8()
+{
+    int corrArr[7] = {1, 2, 3, 'X', 3, 2, 1}; 
+    int incArr[7] = {1, 2, 3, 'X', 4, 2, 1}; 
+    mu_assert("corrArr 1 == 1", checkPalindrone(corrArr) == 1); 
+    mu_assert("incArr 0 == 0", checkPalindrone(incArr) == 0); 
+}
+
 static char* problem5()
 {
+    //also solves problem 6 
     Stack *mainStack = createStack(); 
     Stack *minStack = createStack(); 
     minStack->data[0] =  2147483647;
@@ -105,6 +137,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem8); 
     mu_run_test(problem5); 
     mu_run_test(testStackClass); 
     return 0; 
