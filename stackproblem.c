@@ -20,7 +20,7 @@ static char *testStackClass()
     pop(stack); 
     pop(stack); 
     mu_assert("pop size 2 != 2", returnSize(stack) == 2); 
-    mu_assert("top 2 == 2", top(stack) == 2); 
+    mu_assert("top 1 == 1", top(stack) == 1); 
     return 0; 
 }
 
@@ -47,7 +47,13 @@ void minPop(Stack *mainStack, Stack *minStack)
     {
         return;  
     }
+    if(top(mainStack) == top(minStack))
+    {
+        pop(minStack); 
+    }
+
     pop(mainStack); 
+
     if(top(mainStack) < top(minStack))
     {
         push(top(mainStack), minStack); 
@@ -67,7 +73,8 @@ static char* problem5()
     minPush(3, mainStack, minStack); 
     mu_assert("minTop 1 == 1", top(minStack) == 1); 
     minPop(mainStack, minStack); 
-    mu_assert("minTop 3 == 3", top(minStack) == 3); 
+    minPop(mainStack, minStack); 
+    mu_assert("minTop 10 == 10", top(minStack) == 10); 
 
     return 0; 
 }
