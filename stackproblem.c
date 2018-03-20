@@ -88,15 +88,12 @@ int llCheckPalindrome(int n, node **head)
 {
     node *curr = *head; 
     Stack *stack = createStack(); 
-    for(int i = 0; i < (n/2 + 1); i++)
+    push(curr->data, stack); 
+
+    for(int i = 0; i < n/2; i++)
     {
-        push(curr->data, stack); 
-        if(i == (n/2))
-        {
-            //ugly code rewrite 
-            break; 
-        }
         curr = curr->next; 
+        push(curr->data, stack); 
     }
 
     while(curr){
