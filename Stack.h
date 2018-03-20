@@ -89,3 +89,12 @@ void pop(Stack *stack)
     }
     stack->idx--; 
 }
+int *returnStack(int n, Stack *stack)
+{
+    int *arr = malloc(sizeof(int) * n); 
+    for(int i = n - 1; i > -1; --i)
+    {
+        arr[i] = stack->data[n - i - 1]; 
+    }
+    return arr; 
+}
