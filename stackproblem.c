@@ -21,6 +21,9 @@ static char *testStackClass()
     pop(stack); 
     pop(stack); 
     mu_assert("pop size 2 != 2", returnSize(stack) == 2); 
+    pop(stack); 
+    pop(stack); 
+    mu_assert("pop size 0 != 0", returnIdx(stack) == 0); 
     mu_assert("top 1 == 1", top(stack) == 1); 
     return 0; 
 }
@@ -107,6 +110,33 @@ int llCheckPalindrome(int n, node **head)
     return 1; 
 }
 
+Stack* reverseStack(Stack *stack) 
+{
+    Stack *returnStack = createStack(); 
+
+    while(returnIdx(stack))
+    {
+        push(top(stack), returnStack); 
+        pop(stack); 
+    }
+
+    return returnStack; 
+    
+}
+
+static char* problem11()
+{
+    Stack *stack = createStack(); 
+    push(1, stack); 
+    push(2, stack); 
+    push(3, stack); 
+    stack = reverseStack(stack); 
+    int corrArr[3] = {1, 2, 3}; 
+    int *expArr = returnStack(3, stack); 
+    mu_assert("problem11 1 == 1", mu_arr_assert(3, expArr, corrArr)); 
+
+    return 0; 
+}
 
 static char* problem9()
 { 
@@ -182,6 +212,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem11); 
     mu_run_test(problem9); 
     mu_run_test(problem8); 
     mu_run_test(problem5); 
