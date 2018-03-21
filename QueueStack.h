@@ -13,3 +13,8 @@ QueueStack* createQueueStack()
     QueueStack *q = (QueueStack*)malloc(sizeof(QueueStack)); 
     return q; 
 }
+
+void enque(int data, QueueStack* queueStack)
+{
+    push(data, queueStack->stack0);
+}

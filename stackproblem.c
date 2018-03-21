@@ -124,6 +124,16 @@ Stack* reverseStack(Stack *stack)
     
 }
 
+
+
+static char* problem12()
+{
+    Stack *stack0 = createStack(); 
+    Stack *stack1 = createStack(); 
+
+    return 0; 
+}
+
 static char* problem11()
 {
     Stack *stack = createStack(); 
