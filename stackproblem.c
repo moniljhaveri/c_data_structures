@@ -1,6 +1,7 @@
 #include <stdio.h> 
 #include "Stack.h" 
 #include "SinglyLinkedList.h"
+#include "QueueStack.h" 
 #include "minunit.h"
 
 int tests_run = 0;
@@ -128,8 +129,15 @@ Stack* reverseStack(Stack *stack)
 
 static char* problem12()
 {
-    Stack *stack0 = createStack(); 
-    Stack *stack1 = createStack(); 
+    QueueStack *qS = createQueueStack(); 
+    enque(1, qS); 
+    enque(2, qS); 
+    enque(3, qS); 
+    mu_assert("problem 12 1 == 1", queueTop(qS) == 1); 
+    deque(qS); 
+    mu_assert("problem 12 2 == 2", queueTop(qS) == 2); 
+    deque(qS); 
+    mu_assert("problem 12 3 == 3", queueTop(qS) == 3);  
 
     return 0; 
 }
@@ -222,6 +230,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem12); 
     mu_run_test(problem11); 
     mu_run_test(problem9); 
     mu_run_test(problem8); 
