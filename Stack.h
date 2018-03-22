@@ -1,3 +1,6 @@
+#ifndef _STACK_H
+#define _STACK_H
+
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <stdint.h> 
@@ -98,3 +101,4 @@ int *returnStack(int n, Stack *stack)
     }
     return arr; 
 }
+#endif 
