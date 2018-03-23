@@ -125,7 +125,16 @@ Stack* reverseStack(Stack *stack)
     
 }
 
+static char* problem14() 
+{
+    return 0; 
+}
 
+static char* problem13()
+{
+    // do next chapter 
+    return 0; 
+}
 
 static char* problem12()
 {
