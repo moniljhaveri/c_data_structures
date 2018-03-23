@@ -12,6 +12,85 @@ typedef struct Stack
     int *data
 } Stack; 
 
+typedef struct DoubleStack 
+{
+    unsigned int size; 
+    unsigned int idf; 
+    unsigned int idb; 
+    int *data; 
+} DoubleStack; 
+
+DoubleStack* createDoubleStack()
+{
+    DoubleStack *dS = (DoubleStack*)malloc(sizeof(DoubleStack)); 
+    dS->size = 4; 
+    dS->data = (int*)malloc(sizeof(int)*dS->size);  
+    dS->idf = 0; 
+    dS->idb = dS->size - 1; 
+    return dS; 
+}
+
+void dsEnlarge(DoubleStack *dS)
+{
+    int *newArr = (int*)malloc(sizeof(int)*dS->size*2); 
+    for(int i = 0; i <= dS->idf; i++)
+    {
+        newArr[i] = dS->data[i]; 
+    }
+    for(int i = dS->idb; i < dS->size; i++)
+    {
+        newArr[i + dS->size - 1] = dS->data[i]; 
+    }
+    free(dS->data); 
+    dS->data = newArr;
+}
+
+void pushFront(int data, DoubleStack *dS)
+{
+    dS->data[dS->idf] = data; 
+    dS->idf++; 
+    if(dS->idf == (dS->size/2))
+    {
+        dsEnlarge(dS); 
+    }
+}
+
+void pushBack(int data, DoubleStack *dS)
+{
+    dS->data[dS->idb] = data; 
+    dS->idb--; 
+    if(dS->idb == (dS->size/2))
+    {
+        dsEnlarge(dS); 
+    }
+}
+
+int topFront(DoubleStack *dS)
+{
+    if(dS->idf == 0)
+    {
+        return -1;  
+    }
+    return dS->data[dS->idf - 1]; 
+}
+int topFront(DoubleStack *dS)
+{
+    if(dS->idb == dS->size)
+    {
+        return -1;  
+    }
+    return dS->data[dS->idb + 1]; 
+
+void popFront(DoubleStack *dS)
+{
+    dS->idf--; 
+}
+
+unsigned int returnDSSize(DoubleStack *dS)
+{
+    return dS->size; 
+}
+
 unsigned int returnSize(Stack *stack)
 {
     return (stack->size); 
