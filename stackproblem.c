@@ -127,6 +127,22 @@ Stack* reverseStack(Stack *stack)
 
 static char* problem14() 
 {
+    DoubleStack *dS = createDoubleStack();  
+    pushFront(1, dS); 
+    pushFront(2, dS); 
+    pushFront(3, dS); 
+    mu_assert("pushFront 3 != 3", topFront(dS) == 3); 
+    pushBack(101, dS); 
+    pushBack(102, dS); 
+    pushBack(103, dS); 
+    mu_assert("pushBack 103 == 103", topBack(dS) == 103); 
+    popFront(dS); 
+    popFront(dS); 
+    mu_assert("popFront 1 != 1", topFront(dS) == 1); 
+    popBack(dS); 
+    popBack(dS); 
+    mu_assert("popFront 101 != 101", topBack(dS) == 101); 
+
     return 0; 
 }
 
@@ -239,6 +255,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem14); 
     mu_run_test(problem12); 
     mu_run_test(problem11); 
     mu_run_test(problem9); 
