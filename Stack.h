@@ -73,17 +73,23 @@ int topFront(DoubleStack *dS)
     }
     return dS->data[dS->idf - 1]; 
 }
-int topFront(DoubleStack *dS)
+int topBack(DoubleStack *dS)
 {
     if(dS->idb == dS->size)
     {
         return -1;  
     }
     return dS->data[dS->idb + 1]; 
+} 
 
 void popFront(DoubleStack *dS)
 {
     dS->idf--; 
+}
+
+void popBack(DoubleStack *dS)
+{
+    dS->idb++;
 }
 
 unsigned int returnDSSize(DoubleStack *dS)
