@@ -24,6 +24,7 @@ typedef struct IStack
 {
     unsigned int size; 
     unsigned int *idx; 
+    unsigned int i; 
     int *data; 
 
 } IStack;  
@@ -200,7 +201,24 @@ IStack *createIStack(int n)
     IStack *iStack = (IStack*)malloc(sizeof(IStack)); 
     iStack->size = 2 * n; 
     iStack->data = (int*)malloc(sizeof(int) * 2 * n); 
+    iStack->idx = (int*)malloc(sizeof(int)*n); 
+    iStack->i = n; 
+    for(int i = 0; i < n; i++)
+    {
+        iStack->idx[i] = i; 
+    }
     return iStack; 
 } 
+
+void pushIthStack(int i, int data, IStack* iS)
+{
+    if(iS->idx[i-1] == (iS->size/iS->i + iS->i*i))
+    {
+        ithEnlarge(iS); 
+    }
+    iS->data[iS->idx[i-1]] = data; 
+    iS->idx[i-1]++; 
+
+}
 
 #endif 
