@@ -20,6 +20,14 @@ typedef struct DoubleStack
     int *data; 
 } DoubleStack; 
 
+typedef struct IStack
+{
+    unsigned int size; 
+    unsigned int *idx; 
+    int *data; 
+
+} IStack;  
+
 DoubleStack* createDoubleStack()
 {
     DoubleStack *dS = (DoubleStack*)malloc(sizeof(DoubleStack)); 
@@ -186,4 +194,13 @@ int *returnStack(int n, Stack *stack)
     }
     return arr; 
 }
+
+IStack *createIStack(int n)
+{
+    IStack *iStack = (IStack*)malloc(sizeof(IStack)); 
+    iStack->size = 2 * n; 
+    iStack->data = (int*)malloc(sizeof(int) * 2 * n); 
+    return iStack; 
+} 
+
 #endif 
