@@ -239,4 +239,9 @@ void popIthStack(int i, IStack* iS)
     iS->idx[i-1]--;
 }
 
+int topIthStack(int i; IStack* iS)
+{
+    return iS->data[iS->idx[i-1]];  
+}
+
 #endif 
