@@ -234,4 +234,9 @@ void pushIthStack(int i, int data, IStack* iS)
 
 }
 
+void popIthStack(int i, IStack* iS)
+{
+    iS->idx[i-1]--;
+}
+
 #endif 
