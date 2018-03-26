@@ -210,6 +210,19 @@ IStack *createIStack(int n)
     return iStack; 
 } 
 
+void ithEnlarge(IStack *iS)
+{
+    int *newArr = (int*)malloc(sizeof(int) * 2 * iS->size); 
+    int n = iS->i; 
+    for(int i = 0; i < n; ++i)
+    {
+        for(int j = iS->idx[i]; j < (iS->idx[i] + iS->size/n); ++j)
+        {
+            newArr[j] = iS->data[j]; 
+        }
+    }
+}
+
 void pushIthStack(int i, int data, IStack* iS)
 {
     if(iS->idx[i-1] == (iS->size/iS->i + iS->i*i))
