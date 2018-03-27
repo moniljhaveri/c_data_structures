@@ -196,7 +196,7 @@ int *returnStack(int n, Stack *stack)
     return arr; 
 }
 
-IStack *createIStack(int n)
+IStack *createIthStack(int n)
 {
     IStack *iStack = (IStack*)malloc(sizeof(IStack)); 
     iStack->size = 2 * n; 
@@ -239,9 +239,9 @@ void popIthStack(int i, IStack* iS)
     iS->idx[i-1]--;
 }
 
-int topIthStack(int i; IStack* iS)
+int topIthStack(int i, IStack* iS)
 {
-    return iS->data[iS->idx[i-1]];  
+    return iS->data[iS->idx[i-1]-1];  
 }
 
 #endif 
