@@ -125,6 +125,23 @@ Stack* reverseStack(Stack *stack)
     
 }
 
+static char* problem17()
+{
+    IStack *iS = createIthStack(4);  
+    for(int i = 1; i <= 4; ++i)
+    {
+        for(int j = 1; j <= 4; ++j){
+            pushIthStack(i, j, iS); 
+        }
+    }
+    mu_assert("pushIthStack 1 != 1", topIthStack(1, iS) == 4); 
+    mu_assert("pushIthStack 2 != 2", topIthStack(2, iS) == 4); 
+    mu_assert("pushIthStack 3 != 3", topIthStack(3, iS) == 4); 
+    mu_assert("pushIthStack 4 != 4", topIthStack(4, iS) == 4); 
+    
+    return 0; 
+}
+
 static char* problem14() 
 {
     DoubleStack *dS = createDoubleStack();  
@@ -255,6 +272,7 @@ static char* problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem17); 
     mu_run_test(problem14); 
     mu_run_test(problem12); 
     mu_run_test(problem11); 
