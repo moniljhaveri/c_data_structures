@@ -130,14 +130,14 @@ static char* problem17()
     IStack *iS = createIthStack(4);  
     for(int i = 1; i <= 4; ++i)
     {
-        for(int j = 1; j <= 4; ++j){
+        for(int j = 4; j >= 1; --j){
             pushIthStack(i, j, iS); 
         }
     }
-    mu_assert("pushIthStack 1 != 1", topIthStack(1, iS) == 4); 
-    mu_assert("pushIthStack 2 != 2", topIthStack(2, iS) == 4); 
-    mu_assert("pushIthStack 3 != 3", topIthStack(3, iS) == 4); 
-    mu_assert("pushIthStack 4 != 4", topIthStack(4, iS) == 4); 
+    mu_assert("pushIthStack 1 != 1", topIthStack(1, iS) == 1); 
+    mu_assert("pushIthStack 2 != 2", topIthStack(2, iS) == 1); 
+    mu_assert("pushIthStack 3 != 3", topIthStack(3, iS) == 1); 
+    mu_assert("pushIthStack 4 != 4", topIthStack(4, iS) == 1); 
     
     return 0; 
 }

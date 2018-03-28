@@ -216,7 +216,7 @@ void ithEnlarge(IStack *iS)
     int n = iS->i; 
     for(int i = 0; i < n; ++i)
     {
-        for(int j = iS->idx[i]; j < (iS->idx[i] + iS->size/n); ++j)
+        for(int j = iS->idx[i]; j < ((iS->size/iS->i)*n - 1); ++j)
         {
             newArr[j] = iS->data[j]; 
         }
@@ -225,7 +225,7 @@ void ithEnlarge(IStack *iS)
 
 void pushIthStack(int i, int data, IStack* iS)
 {
-    if(iS->idx[i-1] == (iS->size/iS->i + iS->i*i))
+    if(iS->idx[i-1] == ((iS->size/iS->i)*i - 1))
     {
         ithEnlarge(iS); 
     }
