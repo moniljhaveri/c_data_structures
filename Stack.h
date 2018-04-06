@@ -25,6 +25,7 @@ typedef struct IStack
     unsigned int size; 
     unsigned int *idx; 
     unsigned int i; 
+    unsigned int slot; 
     int *data; 
 
 } IStack;  
@@ -141,6 +142,7 @@ void enlarge(Stack *stack)
     }
 
     free(stack->data); 
+    stack->data = NULL; 
     stack->data = arr; 
     stack->size *= 2; 
 }
@@ -202,30 +204,54 @@ IStack *createIthStack(int n)
     iStack->size = 2 * n; 
     iStack->data = (int*)malloc(sizeof(int) * 2 * n); 
     iStack->idx = (int*)malloc(sizeof(int)*n); 
+    iStack->slot = 2;  
     iStack->i = n; 
-    for(int i = 0; i < n; i++)
+    for(int i = 0; i < n; ++i)
     {
-        iStack->idx[i] = i; 
+        iStack->idx[i] = i*iStack->slot; 
     }
     return iStack; 
 } 
 
 void ithEnlarge(IStack *iS)
 {
-    int *newArr = (int*)malloc(sizeof(int) * 2 * iS->size); 
+    int *newArr = (int*)malloc(sizeof(int) * 2 * iS->slot * iS->i); 
     int n = iS->i; 
+    int k = iS->slot; 
+    iS->slot *= 2; 
+    iS->size *= 2; 
+    
+/*
     for(int i = 0; i < n; ++i)
     {
-        for(int j = iS->idx[i]; j < ((iS->size/iS->i)*n - 1); ++j)
+        for(int j = 0; j < k; j++) 
         {
-            newArr[j] = iS->data[j]; 
+            newArr[i*2 + j] = iS->data[i + j]; 
+        } 
+        iS->idx[i] = (iS->idx[i] - i*iS->slot) + (i*iS->slot * 2); 
+    }
+*/ 
+
+    for(int i = 0; i < n; ++i)
+    {
+        for(int j = 0; j < k; ++j)
+        {
+            newArr[i*2*k + j] = iS->data[i*k +j]; 
         }
     }
+    for(int i = 0; i < n; ++i)
+    {
+        iS->idx[i] += k*i; 
+    }
+
+    free(iS->data); 
+    iS->data = NULL; 
+    iS->data = newArr; 
 }
 
 void pushIthStack(int i, int data, IStack* iS)
 {
-    if(iS->idx[i-1] == ((iS->size/iS->i)*i - 1))
+    if(iS->idx[i-1] == (i*iS->slot - 1))
     {
         ithEnlarge(iS); 
     }

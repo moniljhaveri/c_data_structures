@@ -134,11 +134,10 @@ static char* problem17()
             pushIthStack(i, j, iS); 
         }
     }
-    mu_assert("pushIthStack 1 != 1", topIthStack(1, iS) == 1); 
-    mu_assert("pushIthStack 2 != 2", topIthStack(2, iS) == 1); 
-    mu_assert("pushIthStack 3 != 3", topIthStack(3, iS) == 1); 
+    mu_assert("pushIthStack 1 != 4", topIthStack(1, iS) == 1); 
+    mu_assert("pushIthStack 2 != 4", topIthStack(2, iS) == 1); 
+    mu_assert("pushIthStack 3 != 4", topIthStack(3, iS) == 1); 
     mu_assert("pushIthStack 4 != 4", topIthStack(4, iS) == 1); 
-    
     return 0; 
 }
 
