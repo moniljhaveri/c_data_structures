@@ -35,7 +35,7 @@ typedef struct NodeStack
 {
     unsigned int size;
     unsigned int idx;
-    NodeStack *top;
+    pointerNode *top;
 } NodeStack;
 
 NodeStack *createNodeStack()
