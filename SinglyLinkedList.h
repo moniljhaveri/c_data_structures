@@ -8,6 +8,12 @@ typedef struct node
     struct node *next;
 } node;
 
+typedef struct pointerNode
+{
+    node *data;
+    struct pointerNode *next;
+} pointerNode;
+
 node *createNode(int data)
 {
     node *nodeR = (node *)malloc(sizeof(node));
