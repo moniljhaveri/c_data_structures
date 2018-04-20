@@ -34,21 +34,26 @@ typedef struct IStack
 typedef struct NodeStack
 {
     unsigned int size;
-    unsigned int idx;
-    pointerNode *top;
+    pNode *top;
+
 } NodeStack;
 
-NodeStack *createNodeStack()
+NodeStack *createNodeStack(node *data)
 {
-    NodeStack *nodeStack = (NodeStack *)malloc(sizeof(NodeStack));
-    nodeStack->size = 0;
-    nodeStack->idx = 0;
-
-    return nodeStack;
+    NodeStack *nStack = (NodeStack *)malloc(sizeof(NodeStack));
+    nStack->size = 1;
+    nStack->top = createPNode(data);
 }
 
-DoubleStack *
-createDoubleStack()
+void addNodeStack(node *data, NodeStack *nSt)
+{
+    pNode *pN = createPNode(data);
+    pN->next = nSt->top;
+    nSt->top = pN;
+    nSt->size++;
+}
+
+DoubleStack *createDoubleStack()
 {
     DoubleStack *dS = (DoubleStack *)malloc(sizeof(DoubleStack));
     dS->size = 4;

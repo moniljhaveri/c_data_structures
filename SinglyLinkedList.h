@@ -1,3 +1,6 @@
+#ifndef __SINGLYLINKEDLIST_H
+#define __SINGLYLINKEDLIST_H
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -8,13 +11,21 @@ typedef struct node
     struct node *next;
 } node;
 
-typedef struct pointerNode
+typedef struct pNode
 {
-    node *data;
-    struct pointerNode *next;
-} pointerNode;
+    node **data;
+    struct pNode *next;
+} pNode;
 
-node *createNode(int data)
+pNode *createPNode(node *data)
+{
+    pNode *pN = (pNode *)malloc(sizeof(pNode));
+    pN->data = &data;
+    pN->next = NULL;
+    return pN;
+}
+node *
+createNode(int data)
 {
     node *nodeR = (node *)malloc(sizeof(node));
     nodeR->data = data;
@@ -143,3 +154,4 @@ int *returnNodeArr(int n, node **head)
     }
     return returnArr;
 }
+#endif
