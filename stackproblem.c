@@ -28,6 +28,22 @@ static char *testStackClass()
     mu_assert("top 1 == 1", top(stack) == 1);
     return 0;
 }
+void createBranchList(node **head, node **end, int position)
+{
+    node *endNode = *end;
+    node *curr = *head;
+    int count = 0;
+    while (endNode->next)
+    {
+        endNode = endNode->next;
+    }
+    while (position != count)
+    {
+        curr = curr->next;
+        count++;
+    }
+    endNode->next = curr;
+}
 
 int getMin(Stack *minStack)
 {
@@ -123,6 +139,20 @@ Stack *reverseStack(Stack *stack)
     }
 
     return returnStack;
+}
+static char *problem19()
+{
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    node *shortHead = createNode(10);
+    addBeginning(20, &shortHead);
+    addBeginning(30, &shortHead);
+    addBeginning(40, &shortHead);
+    createBranchList(&head, &shortHead, 2);
+    return 0;
 }
 
 static char *problem17()
@@ -273,6 +303,7 @@ static char *problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(problem19);
     mu_run_test(problem17);
     mu_run_test(problem14);
     mu_run_test(problem12);
