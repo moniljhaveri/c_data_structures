@@ -38,7 +38,37 @@ typedef struct NodeStack
 
 } NodeStack;
 
-NodeStack *createNodeStack(node *data)
+typedef struct llStack
+{
+    unsigned int size;
+    node **tN;
+} llStack;
+
+llStack *createllStack(int data)
+{
+    llStack *llSt = (llStack *)malloc(sizeof(llStack) * 1);
+    llSt->size = 1;
+    node *n = createNode(data);
+    llSt->tN = &n;
+    return llSt;
+}
+
+void addllStack(int data, llStack *llSt)
+{
+    node *n = createNode(data);
+    n->next = *(llSt->tN);
+    llSt->tN = &n;
+    llSt->size += 1;
+    return;
+}
+
+int topllStack(llStack *llSt)
+{
+    return (*(llSt->tN))->data;
+}
+
+NodeStack *
+createNodeStack(node *data)
 {
     NodeStack *nStack = (NodeStack *)malloc(sizeof(NodeStack));
     nStack->size = 1;

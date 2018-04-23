@@ -140,6 +140,15 @@ Stack *reverseStack(Stack *stack)
 
     return returnStack;
 }
+
+static char *llStackTest()
+{
+    llStack *llSt = createllStack(10);
+    addllStack(9, llSt);
+    mu_assert("top 9 != 9", topllStack(llSt));
+    return 0;
+}
+
 static char *problem19()
 {
     node *head = createNode(1);
@@ -152,6 +161,21 @@ static char *problem19()
     addBeginning(30, &shortHead);
     addBeginning(40, &shortHead);
     createBranchList(&head, &shortHead, 2);
+
+    NodeStack *nStack1 = createNodeStack(&head);
+    NodeStack *nStack2 = createNodeStack(&shortHead);
+
+    head = head->next;
+    shortHead = shortHead->next;
+
+    while (head != NULL)
+    {
+        //addNodeStack(&head, &nStack1);
+        //addNodeStack(&shortHead, &nStack2);
+        head = head->next;
+        shortHead = shortHead->next;
+    }
+
     return 0;
 }
 
@@ -303,6 +327,7 @@ static char *problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(llStackTest);
     mu_run_test(problem19);
     mu_run_test(problem17);
     mu_run_test(problem14);
