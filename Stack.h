@@ -54,11 +54,11 @@ llStack *createllStack(int data)
     return llSt;
 }
 
-void testllStack(int data, llStack *llSt)
+void addllStack(int data, llStack *llSt)
 {
     node *newNode = createNode(data);
-    printf("Test %i\n", (llSt->tN)->data);
-    free(newNode);
+    newNode->next = llSt->tN;
+    llSt->tN = newNode;
 }
 
 int topllStack(llStack *llSt)
@@ -68,7 +68,13 @@ int topllStack(llStack *llSt)
 
 void popllStack(llStack *llSt)
 {
+    if (llSt->tN->next == NULL)
+    {
+        return;
+    }
+    node *d = llSt->tN;
     llSt->tN = ((llSt->tN)->next);
+    free(d);
 }
 
 NodeStack *

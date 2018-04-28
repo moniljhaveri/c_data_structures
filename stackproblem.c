@@ -144,8 +144,11 @@ Stack *reverseStack(Stack *stack)
 static char *llStackTest()
 {
     llStack *llSt = createllStack(10);
+    //testllStack(9, llSt);
     addllStack(9, llSt);
     mu_assert("top 9 != 9", topllStack(llSt));
+    popllStack(llSt);
+    mu_assert("top 10 != 10", topllStack(llSt) == 10);
     return 0;
 }
 
