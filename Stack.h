@@ -44,6 +44,37 @@ typedef struct llStack
     node *tN;
 } llStack;
 
+typedef struct pStack 
+{
+    unsigned int size; 
+    pNode *top; 
+} pStack; 
+
+pStack *createPStack(node *data)
+{
+    pStack *pSt = (pStack *)malloc(sizeof(pStack));    
+    pSt->size = 0; 
+    pSt->top = data; 
+    return pSt; 
+}
+
+void addPStack(node *data, pStack *pSt)
+{
+    pNode *pN = createPNode(data); 
+    pN->next = pSt->top; 
+    pSt->top = pN;
+}
+
+node* topPStack(pStack* pSt)
+{
+    return pSt->top->data; 
+}
+
+void popPStack(pStack *pSt)
+{
+       pSt->top = pSt->top->next;  
+}
+
 llStack *createllStack(int data)
 {
     llStack *llSt = (llStack *)malloc(sizeof(llStack) * 1);
