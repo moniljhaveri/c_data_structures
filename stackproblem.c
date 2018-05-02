@@ -186,19 +186,33 @@ static char *problem19()
     addBeginning(40, &shortHead);
     createBranchList(&head, &shortHead, 2);
 
-    NodeStack *nStack1 = createNodeStack(&head);
-    NodeStack *nStack2 = createNodeStack(&shortHead);
+    pStack *nStack1 = createPStack(head);
+    head = head->next;
+    NodeStack *nStack2 = createPStack(&shortHead);
+    shortHead = shortHead->next;
 
     head = head->next;
     shortHead = shortHead->next;
 
     while (head != NULL)
     {
-        //addNodeStack(&head, &nStack1);
-        //addNodeStack(&shortHead, &nStack2);
+        addPStack(head, nStack1);
         head = head->next;
+    }
+    while (shortHead)
+    {
+        addPStack(shortHead, nStack2);
         shortHead = shortHead->next;
     }
+
+    node *prev = NULL;
+    while (topPStack(nStack1) == topPStack(nStack2))
+    {
+        prev = topPStack(nStack1);
+        popPStack(nStack1);
+        popPStack(nStack2);
+    }
+    mu_assert("branch 3 != 3", prev->data == 3);
 
     return 0;
 }
