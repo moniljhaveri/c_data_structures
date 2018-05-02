@@ -141,6 +141,27 @@ Stack *reverseStack(Stack *stack)
     return returnStack;
 }
 
+static char *pStackTest()
+{
+    node *nSt = createListOfSize(4);
+    node *copy = nSt;
+    pStack *pSt = createPStack(nSt);
+    nSt = nSt->next;
+    addPStack(nSt, pSt);
+    nSt = nSt->next;
+    addPStack(nSt, pSt);
+    nSt = nSt->next;
+    addPStack(nSt, pSt);
+    mu_assert("node* !=  node* 1", topPStack(pSt) == nSt);
+    nSt = copy;
+    popPStack(pSt);
+    mu_assert("node* !=  node* 2", topPStack(pSt) == nSt->next->next);
+    popPStack(pSt);
+    mu_assert("node* !=  node* 3", topPStack(pSt) == nSt->next);
+
+    return 0;
+}
+
 static char *llStackTest()
 {
     llStack *llSt = createllStack(10);
@@ -330,6 +351,7 @@ static char *problem1()
 
 static char *run_problem_tests()
 {
+    mu_run_test(pStackTest);
     mu_run_test(llStackTest);
     mu_run_test(problem19);
     mu_run_test(problem17);

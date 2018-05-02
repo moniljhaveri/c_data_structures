@@ -44,38 +44,40 @@ typedef struct llStack
     node *tN;
 } llStack;
 
-typedef struct pStack 
+typedef struct pStack
 {
-    unsigned int size; 
-    pNode *top; 
-} pStack; 
+    unsigned int size;
+    pNode *top;
+} pStack;
 
 pStack *createPStack(node *data)
 {
-    pStack *pSt = (pStack *)malloc(sizeof(pStack));    
-    pSt->size = 0; 
-    pSt->top = data; 
-    return pSt; 
+    pStack *pSt = (pStack *)malloc(sizeof(pStack));
+    pSt->size = 1;
+    pSt->top = createPNode(data);
+    return pSt;
 }
 
 void addPStack(node *data, pStack *pSt)
 {
-    pNode *pN = createPNode(data); 
-    pN->next = pSt->top; 
+    pNode *pN = createPNode(data);
+    pN->next = pSt->top;
     pSt->top = pN;
+    pSt->size += 1;
 }
 
-node* topPStack(pStack* pSt)
+node *topPStack(pStack *pSt)
 {
-    return pSt->top->data; 
+    return (pSt->top->data);
 }
 
 void popPStack(pStack *pSt)
 {
-       pSt->top = pSt->top->next;  
+    pSt->top = pSt->top->next;
 }
 
-llStack *createllStack(int data)
+llStack *
+createllStack(int data)
 {
     llStack *llSt = (llStack *)malloc(sizeof(llStack) * 1);
     llSt->size = 1;
@@ -90,6 +92,7 @@ void addllStack(int data, llStack *llSt)
     node *newNode = createNode(data);
     newNode->next = llSt->tN;
     llSt->tN = newNode;
+    llSt->size++;
 }
 
 int topllStack(llStack *llSt)
@@ -103,6 +106,7 @@ void popllStack(llStack *llSt)
     {
         return;
     }
+    llSt->size--;
     node *d = llSt->tN;
     llSt->tN = ((llSt->tN)->next);
     free(d);

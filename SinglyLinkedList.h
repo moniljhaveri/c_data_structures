@@ -20,7 +20,7 @@ typedef struct pNode
 pNode *createPNode(node *data)
 {
     pNode *pN = (pNode *)malloc(sizeof(pNode));
-    pN->data = &data;
+    pN->data = data;
     pN->next = NULL;
     return pN;
 }
