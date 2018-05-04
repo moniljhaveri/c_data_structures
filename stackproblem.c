@@ -173,7 +173,65 @@ static char *llStackTest()
     return 0;
 }
 
-static char *problem19()
+int dumblookup(int val)
+{
+    if (val == 6)
+    {
+        return 0;
+    }
+    else if (val == 3)
+    {
+        return 1;
+    }
+    else if (val == 4)
+    {
+        return 2;
+    }
+    else if (val == 5)
+    {
+        return 3;
+    }
+    else if (val == 2)
+    {
+        return 4;
+    }
+    return -1;
+}
+static char *problem22()
+{
+    int arr[5] = {6, 3, 4, 5, 2};
+    int n = 5;
+    int s[5];
+
+    Stack *st = createStack();
+    for (int i = 0; i < n; ++i)
+    {
+        int p = arr[i];
+        int count = i;
+        while (st->idx && (top(st) < p))
+        {
+            pop(st);
+        }
+        int ind = 0;
+        if (st->idx)
+        {
+            ind = dumblookup(top(st));
+        }
+        int c = i - ind;
+        if (!c)
+        {
+            c = 1;
+        }
+        s[i] = c;
+        push(p, st);
+    }
+    int ans[5] = {1, 1, 2, 3, 1};
+    mu_assert("span != span", mu_arr_assert(5, s, ans));
+
+    return 0;
+}
+
+static char *problem21()
 {
     node *head = createNode(1);
     addBeginning(2, &head);
@@ -367,7 +425,8 @@ static char *run_problem_tests()
 {
     mu_run_test(pStackTest);
     mu_run_test(llStackTest);
-    mu_run_test(problem19);
+    mu_run_test(problem22);
+    mu_run_test(problem21);
     mu_run_test(problem17);
     mu_run_test(problem14);
     mu_run_test(problem12);
