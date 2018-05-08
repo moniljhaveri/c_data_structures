@@ -197,6 +197,55 @@ int dumblookup(int val)
     }
     return -1;
 }
+
+static char *problem24()
+{
+    int arr[5] = {2, 1, 2, 3, 1};
+    int n = 5;
+
+    Stack *st = createStack();
+    int area = 0;
+
+    for (int i = 0; i < n; ++i)
+    {
+        if (!st->idx)
+        {
+            push(i, st);
+        }
+        else
+        {
+            int temp = top(st);
+            if (arr[temp] < arr[i])
+            {
+                push(i, st);
+            }
+            else
+            {
+                while (st->idx)
+                {
+                    int tmpArea = arr[top(st)] * (i - top(st) - 1);
+                    if (tmpArea > area)
+                    {
+                        area = tmpArea;
+                    }
+                    pop(st);
+                }
+            }
+        }
+    }
+    while (st->idx)
+    {
+        int tmpArea = arr[top(st)] * (n - top(st) - 1);
+        if (tmpArea > area)
+        {
+            area = tmpArea;
+        }
+        pop(st);
+    }
+    mu_assert("area != 5", area == 5);
+
+    return 0;
+}
 static char *problem22()
 {
     int arr[5] = {6, 3, 4, 5, 2};
@@ -425,6 +474,7 @@ static char *run_problem_tests()
 {
     mu_run_test(pStackTest);
     mu_run_test(llStackTest);
+    mu_run_test(problem24);
     mu_run_test(problem22);
     mu_run_test(problem21);
     mu_run_test(problem17);
