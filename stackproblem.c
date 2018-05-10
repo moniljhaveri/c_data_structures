@@ -197,6 +197,58 @@ int dumblookup(int val)
     }
     return -1;
 }
+int checkPairs(Stack *st)
+{
+    Stack *newSt = createStack();
+    int n = (st->idx / 2) * 2 - 1;
+    int count = 0;
+    while (count < n)
+    {
+        count++;
+        int tp = top(st);
+        pop(st);
+        push(tp, newSt);
+        int test = abs(top(newSt) - top(st));
+        if (test != 1)
+        {
+            return 0;
+        }
+        else
+        {
+            pop(st);
+            pop(newSt);
+            count++;
+        }
+    }
+
+    return 1;
+}
+
+static char *problem27()
+{
+    int n = 9;
+    int arr[9] = {4, 5, -2, -3, 11, 10, 5, 6, 20};
+    int arr1[9] = {4, 5, -2, -3, 11, 10, 5, 100, 20};
+    Stack *st = createStack();
+    Stack *st1 = createStack();
+    for (int i = 0; i < 9; i++)
+    {
+        push(arr[n - i - 1], st);
+    }
+    for (int i = 0; i < 9; i++)
+    {
+        push(arr1[n - i - 1], st1);
+    }
+    mu_assert("1 != 1", checkPairs(st) == 1);
+    mu_assert("0 != 0", checkPairs(st1) == 0);
+    return 0;
+}
+
+static char *problem26()
+{
+    //come back to
+    return 0;
+}
 
 static char *problem24()
 {
@@ -468,6 +520,7 @@ static char *run_problem_tests()
 {
     mu_run_test(pStackTest);
     mu_run_test(llStackTest);
+    mu_run_test(problem27);
     mu_run_test(problem24);
     mu_run_test(problem22);
     mu_run_test(problem21);
