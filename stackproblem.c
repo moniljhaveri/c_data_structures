@@ -200,37 +200,31 @@ int dumblookup(int val)
 
 static char *problem24()
 {
-    int arr[5] = {2, 1, 2, 3, 1};
-    int n = 5;
+    int arr[7] = {6, 2, 5, 4, 5, 1, 6};
+    int n = 7;
 
     Stack *st = createStack();
     int area = 0;
-
-    for (int i = 0; i < n; ++i)
+    int tmp;
+    for (int i = 0; i < n; i++)
     {
-        if (!st->idx)
+        if (!st->idx || arr[top(st)] < arr[i])
         {
             push(i, st);
         }
         else
         {
-            int temp = top(st);
-            if (arr[temp] < arr[i])
+            tmp = top(st);
+            pop(st);
+            while (arr[tmp] < arr[i])
             {
-                push(i, st);
-            }
-            else
-            {
-                while (st->idx)
+                int tmpArea = arr[top(st)] * (i - top(st) - 1);
+                if (tmpArea > area)
                 {
-                    int tmpArea = arr[top(st)] * (i - top(st) - 1);
-                    if (tmpArea > area)
-                    {
-                        area = tmpArea;
-                    }
-                    pop(st);
+                    area = tmpArea;
                 }
             }
+            push(i, st);
         }
     }
     while (st->idx)
@@ -242,7 +236,7 @@ static char *problem24()
         }
         pop(st);
     }
-    mu_assert("area != 5", area == 5);
+    mu_assert("area != 12", area == 12);
 
     return 0;
 }
