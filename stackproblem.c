@@ -224,6 +224,32 @@ int checkPairs(Stack *st)
     return 1;
 }
 
+static char* problem28()
+{
+    int n = 9; 
+    int arr[9] = {0, 1, 2, 3, 3, 2, 1, 0, 4}; 
+    Stack *st = createStack(); 
+    for(int i = 0; i < n; ++i)
+    {
+        int tmp = arr[i]; 
+        if(!st->idx){
+            push(tmp, st); 
+        }
+        else if(top(st) == tmp)
+        {
+             pop(st);  
+        }
+        else 
+        {
+            push(tmp, st); 
+        }
+    }
+    mu_assert("4 != 4", top(st) == 4);
+
+
+    return 0; 
+}
+
 static char *problem27()
 {
     int n = 9;
@@ -520,6 +546,7 @@ static char *run_problem_tests()
 {
     mu_run_test(pStackTest);
     mu_run_test(llStackTest);
+    mu_run_test(problem28);
     mu_run_test(problem27);
     mu_run_test(problem24);
     mu_run_test(problem22);
