@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "Stack.h"
 #include "SinglyLinkedList.h"
 #include "QueueStack.h"
@@ -224,30 +225,45 @@ int checkPairs(Stack *st)
     return 1;
 }
 
-static char* problem28()
+char *checkPairsChar(int n, char *arr)
 {
-    int n = 9; 
-    int arr[9] = {0, 1, 2, 3, 3, 2, 1, 0, 4}; 
-    Stack *st = createStack(); 
-    for(int i = 0; i < n; ++i)
+    int i = 0;
+    int top = -1;
+    while (i < n)
     {
-        int tmp = arr[i]; 
-        if(!st->idx){
-            push(tmp, st); 
-        }
-        else if(top(st) == tmp)
+        if (top < 0 || arr[top] != arr[i])
         {
-             pop(st);  
+            top++;
+            arr[top] = arr[i];
+            i++;
         }
-        else 
+        else
         {
-            push(tmp, st); 
+            while (i < n && arr[top] == arr[i])
+            {
+                i++;
+                top--;
+            }
         }
     }
-    mu_assert("4 != 4", top(st) == 4);
+    arr[top + 1] = '\0';
+    char *rArr = (char *)malloc(sizeof(char) * (top + 1));
+    memset(rArr, '\0', sizeof(rArr));
+    strcpy(rArr, arr);
 
+    return rArr;
+}
 
-    return 0; 
+static char *problem28()
+{
+    int n = 11;
+    char arr[11] = "mississippi";
+    char arr1[10] = {'c', 'a', 'r', 'e', 'e', 'r', 'm', 'o', 'n', 'k'};
+    char t1[2] = "m\0";
+    char *test = checkPairsChar(n, arr);
+    int i = strncmp(t1, test, sizeof(test));
+    mu_assert("m != m", strcmp(t1, test) == 0);
+    return 0;
 }
 
 static char *problem27()
