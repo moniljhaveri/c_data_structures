@@ -254,6 +254,64 @@ char *checkPairsChar(int n, char *arr)
     return rArr;
 }
 
+typedef struct ind
+{
+    int data;
+    int index;
+} ind;
+
+static char *
+problem29()
+{
+    int arr[6] = {16, 17, 4, 3, 5, 2};
+    ind indArr[6];
+    int n = 6;
+    int top = 0;
+
+    for (int i = 1; i < n; i++)
+    {
+        int data = arr[i];
+        if (i == 1)
+        {
+            ind temp = {data, i};
+            indArr[top] = temp;
+        }
+        else if (indArr[top].index < i && indArr[top].data < data)
+        {
+            ind temp = {data, i};
+            indArr[top] = temp;
+        }
+        else if (indArr[top].index > i)
+        {
+            top++;
+            ind temp = {data, i};
+            indArr[top] = temp;
+        }
+        else if (i == (n - 1))
+        {
+            top++;
+            ind temp = {-1, i};
+            indArr[top] = temp;
+        }
+    }
+    top++;
+    ind temp = {-1, n};
+    indArr[top] = temp;
+    int ans[n];
+    int prev = 0;
+    for (int i = 1; i < top + 1; i++)
+    {
+        int index = indArr[i].index;
+        for (int j = prev; j < index; j++)
+        {
+            ans[j] = indArr[i].data;
+        }
+        prev = index;
+    }
+    int t = 0;
+    return 0;
+}
+
 static char *problem28()
 {
     int n = 11;
@@ -562,6 +620,7 @@ static char *run_problem_tests()
 {
     mu_run_test(pStackTest);
     mu_run_test(llStackTest);
+    mu_run_test(problem29);
     mu_run_test(problem28);
     mu_run_test(problem27);
     mu_run_test(problem24);
