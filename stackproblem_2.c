@@ -38,6 +38,91 @@ int checkParentheses(int n, char *arr)
     return 0;
 }
 
+int checkChar(char c)
+{
+    if (c == '(')
+    {
+        return 1;
+    }
+    else if (c == '+')
+    {
+        return 2;
+    }
+    else if (c == '-')
+    {
+        return 3;
+    }
+    else if (c == '*')
+    {
+        return 4;
+    }
+    else if (c == ')')
+    {
+        return 5;
+    }
+    return 0;
+}
+
+char *infixTopPostfix(int n, char *arr)
+{
+    char *rArr = (char *)malloc(sizeof(char) * n);
+    char *st = (char *)malloc(sizeof(char) * n);
+
+    int j = 0;
+    int top = -1;
+
+    for (int i = 0; i < n; i++)
+    {
+        int check = checkChar(arr[i]);
+        if (!check)
+        {
+            rArr[j] = arr[i];
+            j++;
+        }
+        else if (top == -1)
+        {
+            top++;
+            st[top] = arr[i];
+        }
+        else if (arr[i] == '(')
+        {
+            top++;
+            st[top] = arr[i];
+        }
+        else if (st[top] == '(' && check)
+        {
+            st[top] = arr[i];
+        }
+        else if (arr[i] == ')')
+        {
+            rArr[j] = st[top];
+            j++;
+            top--;
+            rArr[j] = st[top];
+            j++;
+            top--;
+        }
+        else
+        {
+            rArr[j] = st[top];
+            st[top] = arr[i];
+            j++;
+        }
+    }
+    rArr[j] = st[top];
+
+    return rArr;
+}
+
+static char *problem2()
+{
+    char arr1[13] = "{(a+b)-(b-a)}";
+    char eq[11] = "A*B-(C+D)+E";
+    char *ans = infixTopPostfix(11, eq);
+    mu_assert("eq != ab*cd+-e+", !strcmp(ans, "AB*CD+-E+"));
+    return 0;
+}
+
 static char *problem1()
 {
     char arr1[13] = "{(a+b)-(b-a)}";
@@ -49,6 +134,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem2);
     mu_run_test(problem1);
     return 0;
 }
