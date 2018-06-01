@@ -113,6 +113,62 @@ char *infixTopPostfix(int n, char *arr)
 
     return rArr;
 }
+int calc(int c0, int c1, char op)
+{
+    int ans = 0;
+    if (op == '+')
+    {
+        ans = c0 + c1;
+    }
+    else if (op == '-')
+    {
+        ans = c0 - c1;
+    }
+    else if (op == '*')
+    {
+        ans = c0 * c1;
+    }
+    else if (op == '%')
+    {
+        ans = c0 % c1;
+    }
+    return ans;
+}
+
+int postfixEvaluation(int n, char *arr)
+{
+    int st1[n];
+    int t1 = -1;
+    for (int i = 0; i < n; ++i)
+    {
+        int check = checkChar(arr[i]);
+        if (!check)
+        {
+            ++t1;
+            st1[t1] = (int)arr[i] - '0';
+        }
+        else
+        {
+            int c1 = (int)st1[t1];
+            --t1;
+            int c0 = (int)st1[t1];
+            --t1;
+            int cal = calc(c0, c1, arr[i]);
+            ++t1;
+            st1[t1] = cal;
+        }
+    }
+    return st1[0];
+}
+
+static char *problem3()
+{
+    char eq[11] = "1*2-(3+4)+5";
+    char *postFix = infixTopPostfix(11, eq);
+    int ans = postfixEvaluation(11, postFix);
+    mu_assert("0 == 0", ans == 0);
+    return 0;
+}
 
 static char *problem2()
 {
@@ -134,6 +190,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem3);
     mu_run_test(problem2);
     mu_run_test(problem1);
     return 0;
