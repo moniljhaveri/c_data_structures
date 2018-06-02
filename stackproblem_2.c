@@ -38,6 +38,147 @@ int checkParentheses(int n, char *arr)
     return 0;
 }
 
+int checkChar(char c)
+{
+    if (c == '(')
+    {
+        return 1;
+    }
+    else if (c == '+')
+    {
+        return 2;
+    }
+    else if (c == '-')
+    {
+        return 3;
+    }
+    else if (c == '*')
+    {
+        return 4;
+    }
+    else if (c == ')')
+    {
+        return 5;
+    }
+    return 0;
+}
+
+char *infixTopPostfix(int n, char *arr)
+{
+    char *rArr = (char *)malloc(sizeof(char) * n);
+    char *st = (char *)malloc(sizeof(char) * n);
+
+    int j = 0;
+    int top = -1;
+
+    for (int i = 0; i < n; i++)
+    {
+        int check = checkChar(arr[i]);
+        if (!check)
+        {
+            rArr[j] = arr[i];
+            j++;
+        }
+        else if (top == -1)
+        {
+            top++;
+            st[top] = arr[i];
+        }
+        else if (arr[i] == '(')
+        {
+            top++;
+            st[top] = arr[i];
+        }
+        else if (st[top] == '(' && check)
+        {
+            st[top] = arr[i];
+        }
+        else if (arr[i] == ')')
+        {
+            rArr[j] = st[top];
+            j++;
+            top--;
+            rArr[j] = st[top];
+            j++;
+            top--;
+        }
+        else
+        {
+            rArr[j] = st[top];
+            st[top] = arr[i];
+            j++;
+        }
+    }
+    rArr[j] = st[top];
+
+    return rArr;
+}
+int calc(int c0, int c1, char op)
+{
+    int ans = 0;
+    if (op == '+')
+    {
+        ans = c0 + c1;
+    }
+    else if (op == '-')
+    {
+        ans = c0 - c1;
+    }
+    else if (op == '*')
+    {
+        ans = c0 * c1;
+    }
+    else if (op == '%')
+    {
+        ans = c0 % c1;
+    }
+    return ans;
+}
+
+int postfixEvaluation(int n, char *arr)
+{
+    int st1[n];
+    int t1 = -1;
+    for (int i = 0; i < n; ++i)
+    {
+        int check = checkChar(arr[i]);
+        if (!check)
+        {
+            ++t1;
+            st1[t1] = (int)arr[i] - '0';
+        }
+        else
+        {
+            int c1 = (int)st1[t1];
+            --t1;
+            int c0 = (int)st1[t1];
+            --t1;
+            int cal = calc(c0, c1, arr[i]);
+            ++t1;
+            st1[t1] = cal;
+        }
+    }
+    return st1[0];
+}
+
+static char *problem3()
+{
+    char eq[11] = "1*2-(3+4)+5";
+    char *postFix = infixTopPostfix(11, eq);
+    int ans = postfixEvaluation(11, postFix);
+    mu_assert("0 == 0", ans == 0);
+    return 0;
+}
+
+static char *problem2()
+{
+    char arr1[13] = "{(a+b)-(b-a)}";
+    char eq[11] = "A*B-(C+D)+E";
+    char *ans = infixTopPostfix(11, eq);
+    mu_assert("eq != ab*cd+-e+", !strcmp(ans, "AB*CD+-E+"));
+    return 0;
+}
+
 static char *problem1()
 {
     char arr1[13] = "{(a+b)-(b-a)}";
@@ -49,6 +190,8 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem3);
+    mu_run_test(problem2);
     mu_run_test(problem1);
     return 0;
 }
