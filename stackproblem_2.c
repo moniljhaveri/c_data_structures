@@ -217,7 +217,10 @@ static char *problem4()
 {
     char eq[11] = "1*2-(3+4)+6";
     int ans = infixEvaluation(11, eq);
-    mu_assert("0 != 0", ans == 1);
+    mu_assert("1 != 1", ans == 1);
+    char eq1[11] = "1*2-(3+4)+5";
+    ans = infixEvaluation(11, eq1);
+    mu_assert("0 != 0", ans == 0);
     return 0;
 }
 
