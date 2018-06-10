@@ -161,6 +161,69 @@ int postfixEvaluation(int n, char *arr)
     return st1[0];
 }
 
+int infixEvaluation(int n, char *arr)
+{
+    int ans = 0;
+    char stOp[n];
+    int stNum[n];
+    int topOp = -1;
+    int topNum = -1;
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        int check = checkChar(arr[i]);
+        int check1 = checkChar(arr[i + 1]);
+
+        if (arr[i] == '(')
+        {
+            topOp++;
+            stOp[topOp] = arr[i];
+        }
+        else if (arr[i] == ')')
+        {
+            int c1 = stNum[topNum];
+            topNum--;
+            int c0 = stNum[topNum];
+            topOp--;
+            int cal = calc(c0, c1, stOp[topOp]);
+            stNum[topNum] = cal;
+        }
+        else if (check && !check1)
+        {
+            int c1 = (int)arr[i + 1] - '0';
+            int c0 = stNum[topNum];
+            ++topOp;
+            stOp[topOp] = arr[i];
+            int cal = calc(c0, c1, stOp[topOp]);
+            stNum[topNum] = cal;
+            topOp--;
+            i++;
+        }
+        else if (!check && check1)
+        {
+            topNum++;
+            stNum[topNum] = (int)arr[i] - '0';
+        }
+        else
+        {
+            topOp++;
+            stOp[topOp] = arr[i];
+        }
+    }
+    return stNum[0];
+}
+
+static char *problem4()
+{
+    char eq[11] = "1*2-(3+4)+6";
+    int ans = infixEvaluation(11, eq);
+    mu_assert("1 != 1", ans == 1);
+    char eq1[11] = "1*2-(3+4)+5";
+    ans = infixEvaluation(11, eq1);
+    mu_assert("0 != 0", ans == 0);
+    return 0;
+}
+
 static char *problem3()
 {
     char eq[11] = "1*2-(3+4)+5";
@@ -190,6 +253,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem4);
     mu_run_test(problem3);
     mu_run_test(problem2);
     mu_run_test(problem1);
