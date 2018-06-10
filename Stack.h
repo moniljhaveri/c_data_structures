@@ -271,7 +271,7 @@ int top(Stack *stack)
 
         return stack->data[stack->idx - 1];
     }
-    return stack->data[stack->idx];
+    return 0; 
 }
 
 void pop(Stack *stack)
