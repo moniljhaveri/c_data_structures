@@ -213,6 +213,69 @@ int infixEvaluation(int n, char *arr)
     return stNum[0];
 }
 
+int getMin(Stack *stMain, Stack *stMin)
+{
+    static int size = 5;
+    int temp; 
+    if (size <= 0)
+        return -1;
+    if(top(stMain) == 0 && top(stMin) != 0)
+    {
+        temp = top(stMin); 
+        pop(stMin); 
+    }
+    else if(top(stMain) != 0 && top(stMin) == 0)
+    {
+        temp = top(stMain); 
+        pop(stMain); 
+    }
+    else if(top(stMain) < top(stMin))
+    {
+
+        temp = top(stMain); 
+        pop(stMain); 
+    }
+    else 
+    {
+        temp = top(stMin); 
+        pop(stMin); 
+    }
+    
+    --size; 
+
+    return temp;
+}
+void populateSt(int data, Stack *stMain, Stack *stMin)
+{
+    static int size = 0; 
+    if (size == 0 || data < top(stMin))
+    {
+        push(data, stMin);
+        ++size; 
+    } else {
+        push(data, stMain);
+
+    }
+}
+
+static char *problem5()
+{
+    int arr[5] = {5, 2, 4, 3, 1};
+    Stack *stMain = createStack();
+    Stack *stMin = createStack();
+    for (int i = 0; i < 5; ++i)
+    {
+        populateSt(arr[i], stMain, stMin);
+    }
+
+    mu_assert("getMin == 1", getMin(stMain, stMin) == 1); 
+    mu_assert("getMin == 2", getMin(stMain, stMin) == 2); 
+    mu_assert("getMin == 3", getMin(stMain, stMin) == 3); 
+    mu_assert("getMin == 4", getMin(stMain, stMin) == 4); 
+    mu_assert("getMin == 5", getMin(stMain, stMin) == 5); 
+    return 0;
+}
+
 static char *problem4()
 {
     char eq[11] = "1*2-(3+4)+6";
@@ -253,6 +316,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem5);
     mu_run_test(problem4);
     mu_run_test(problem3);
     mu_run_test(problem2);
