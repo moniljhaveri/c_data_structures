@@ -276,7 +276,71 @@ void pushInt(int data, int pointer, int *st)
     }
     return;
 }
+void pushIntV2(int data, int *p, int *st)
+{
+    int pointer = *p;
+    if (!pointer)
+    {
+        st[pointer] = data;
+        pointer++;
+        *p = pointer;
+        return;
+    }
+    if (data < st[pointer - 1])
+    {
+        st[pointer] = data;
+        pointer++;
+        *p = pointer;
+    }
+    return;
+}
+int popInt(int data, int *p, int *st)
+{
+    int pointer = *p;
+    int tmp;
+    if (data == st[pointer - 1])
+    {
+        *p = --pointer;
+        tmp = st[pointer];
+        *p = --pointer;
+        return tmp;
+    }
+    tmp = st[pointer];
 
+    return tmp;
+}
+
+static char *problem6()
+{
+    int arr[5] = {5, 2, 4, 3, 1};
+    int *st = (int *)malloc(sizeof(int) * 5);
+    int p = 0;
+    int ans[5];
+
+    for (int i = 0; i < 5; ++i)
+    {
+        pushIntV2(arr[i], &p, st);
+    }
+    int n = p;
+    for (int i = 4; i >= 0; --i)
+    {
+        int tmp = popInt(arr[i], &n, st);
+        ans[i] = tmp;
+    }
+
+    n = 4;
+    mu_assert("min == 1", ans[n] == 1);
+    --n;
+    mu_assert("min == 2", ans[n] == 2);
+    --n;
+    mu_assert("min == 2", ans[n] == 2);
+    --n;
+    mu_assert("min == 2", ans[n] == 2);
+    --n;
+    mu_assert("min == 5", ans[n] == 5);
+
+    return 0;
+}
 static char *problem5Actual()
 {
 
@@ -295,7 +359,7 @@ static char *problem5Actual()
     --n;
     mu_assert("min == 2", st[n] == 2);
     --n;
-    mu_assert("min == 2", st[n] == 5);
+    mu_assert("min == 5", st[n] == 5);
 
     return 0;
 }
@@ -359,6 +423,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem6);
     mu_run_test(problem5Actual);
     mu_run_test(problem5);
     mu_run_test(problem4);
