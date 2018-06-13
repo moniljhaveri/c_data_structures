@@ -309,6 +309,43 @@ int popInt(int data, int *p, int *st)
 
     return tmp;
 }
+int isPalindrone(int n, char *arr)
+{
+    char st[n];
+    int half = n / 2;
+    int p = -1;
+    for (int i = 0; i < half; ++i)
+    {
+        p++;
+        st[p] = arr[i];
+    }
+    for (int i = half + 1; i < n; ++i)
+    {
+        if (arr[i] != st[p])
+        {
+            return 0;
+        }
+        --p;
+    }
+
+    return 1;
+}
+
+static char *problem8()
+{
+    char arrT[7] = "abcXcba";
+    char arrF[7] = "abcXcbd";
+
+    mu_assert("arrT != 1", isPalindrone(7, arrT) == 1);
+    mu_assert("arrF != 0", isPalindrone(7, arrF) == 0);
+    return 0;
+}
+
+static char *problem7()
+{
+    //skip this for now see dynamic programming
+    return 0;
+}
 
 static char *problem6()
 {
@@ -423,6 +460,8 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem8);
+    mu_run_test(problem7);
     mu_run_test(problem6);
     mu_run_test(problem5Actual);
     mu_run_test(problem5);
