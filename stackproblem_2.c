@@ -372,6 +372,65 @@ void enque12(int data, int *pointer1, int *pointer2, int *st1, int *st2)
     *pointer1 = p1;
 }
 
+int pushFront14(int data, int *fP, int *bP, int *dSt)
+{
+    if (*fP == *bP)
+    {
+        return -1;
+    }
+    dSt[*fP] = data;
+    (*fP)++;
+    return 1;
+}
+int pushBack14(int data, int *fP, int *bP, int *dSt)
+{
+    if (*fP == *bP)
+    {
+        return -1;
+    }
+    dSt[*bP] = data;
+    (*bP)--;
+    return 1;
+}
+
+int popFront14(int *fP, int *dSt)
+{
+    (*fP)--;
+    int i = *fP;
+    int tmp = dSt[i];
+    return tmp;
+}
+
+int popBack14(int *bP, int *dSt)
+{
+    (*bP)++;
+    int i = *bP;
+    int tmp = dSt[i];
+    return tmp;
+}
+
+static char *problem14()
+{
+    int dSt[10];
+    int fP = 0;
+    int bP = 9;
+    for (int i = 0; i < 9; ++i)
+    {
+        if (i % 2 == 0)
+        {
+            pushFront14(i, &fP, &bP, dSt);
+        }
+        else
+        {
+            pushBack14(i, &fP, &bP, dSt);
+        }
+    }
+    mu_assert("push works when it shouldn't", -1 == pushFront14(10, &fP, &bP, dSt));
+    mu_assert("8 != 8", 8 == popFront14(&fP, dSt));
+    mu_assert("7 != 7", 7 == popBack14(&bP, dSt));
+    return 0;
+}
+
 static char *problem12()
 {
     int n = 5;
@@ -526,6 +585,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem14);
     mu_run_test(problem12);
     mu_run_test(problem8);
     mu_run_test(problem7);
