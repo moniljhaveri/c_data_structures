@@ -331,6 +331,72 @@ int isPalindrone(int n, char *arr)
     return 1;
 }
 
+int deque12(int *pointer1, int *pointer2, int *st1, int *st2)
+{
+    int p1 = *pointer1;
+    int p2 = *pointer2;
+    int tmp;
+    if (p2 >= 0)
+    {
+        tmp = st2[p2];
+        p2--;
+    }
+    else
+    {
+        if (p1 >= 0)
+        {
+            p2 = -1;
+            int tmpP = p1;
+            for (int i = 0; i <= p1; i++)
+            {
+                st2[tmpP] = st1[i];
+                p2++;
+                tmpP--;
+            }
+            tmp = st2[p2];
+            p2--;
+            p1 = -1;
+        }
+    }
+
+    *pointer1 = p1;
+    *pointer2 = p2;
+    return tmp;
+}
+
+void enque12(int data, int *pointer1, int *pointer2, int *st1, int *st2)
+{
+    int p1 = *pointer1;
+    p1++;
+    st1[p1] = data;
+    *pointer1 = p1;
+}
+
+static char *problem12()
+{
+    int n = 5;
+    int arr[5] = {0, 1, 2, 3, 4};
+    int st1[5];
+    int st2[5];
+    int p1 = -1;
+    int p2 = -1;
+    for (int i = 0; i < 2; ++i)
+    {
+        enque12(arr[i], &p1, &p2, st1, st2);
+    }
+    mu_assert("0 != 0", 0 == deque12(&p1, &p2, st1, st2));
+    mu_assert("1 != 1", 1 == deque12(&p1, &p2, st1, st2));
+    for (int i = 2; i < n; ++i)
+    {
+        enque12(arr[i], &p1, &p2, st1, st2);
+    }
+    mu_assert("2 != 2", 2 == deque12(&p1, &p2, st1, st2));
+    mu_assert("3 != 3", 3 == deque12(&p1, &p2, st1, st2));
+    mu_assert("4 != 4", 4 == deque12(&p1, &p2, st1, st2));
+
+    return 0;
+}
+
 static char *problem11()
 {
     //solved in problem8
@@ -489,6 +555,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem12);
     mu_run_test(problem11);
     mu_run_test(problem8);
     mu_run_test(problem7);
