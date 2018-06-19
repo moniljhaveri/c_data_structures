@@ -456,8 +456,37 @@ static char *problem12()
     return 0;
 }
 
+static char *problem11()
+{
+    //solved in problem8
+    int arr[5] = {0, 1, 2, 3, 4};
+    int ans[5] = {4, 3, 2, 1, 0};
+    int ansArr[5];
+    Stack *st1 = createStack();
+    Stack *st2 = createStack();
+    for (int i = 0; i < 5; ++i)
+    {
+        push(arr[i], st1);
+    }
+    for (int i = 0; i < 5; ++i)
+    {
+        int tmp = top(st1);
+        pop(st1);
+        push(tmp, st2);
+    }
+    for (int i = 0; i < 5; ++i)
+    {
+        int tmp = top(st2);
+        pop(st2);
+        ansArr[i] = tmp;
+    }
+    mu_arr_assert(5, ans, ansArr);
+    return 0;
+}
+
 static char *problem8()
 {
+    //solves problem 9 and 10
     char arrT[7] = "abcXcba";
     char arrF[7] = "abcXcbd";
 
@@ -587,6 +616,7 @@ static char *run_problem_tests()
 {
     mu_run_test(problem14);
     mu_run_test(problem12);
+    mu_run_test(problem11);
     mu_run_test(problem8);
     mu_run_test(problem7);
     mu_run_test(problem6);
