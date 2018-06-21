@@ -372,6 +372,65 @@ void enque12(int data, int *pointer1, int *pointer2, int *st1, int *st2)
     *pointer1 = p1;
 }
 
+void initM(int n, int m, int *pArr)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        pArr[i] = i * m;
+    }
+}
+
+void pushM(int data, int ind, int m, int *st, int *pArr)
+{
+    int i = pArr[ind];
+    if ((i <= ((ind + 1) * m)) && ((ind * m) <= i))
+    {
+        st[i] = data;
+        pArr[ind] = ++i;
+    }
+}
+
+int popM(int ind, int m, int *st, int *pArr)
+{
+    int i = pArr[ind];
+    int data = -1;
+    if ((i <= ((ind + 1) * m)) && ((ind * m) <= i))
+    {
+        --i;
+        data = st[i];
+        pArr[ind] = i;
+    }
+
+    return data;
+}
+
+static char *problem15()
+{
+    int n = 5;
+    int m = 3;
+    int *pArr = (int *)calloc(n, sizeof(int));
+    initM(n, m, pArr);
+    int *arr = (int *)calloc(n * m, sizeof(int));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 1; j <= m; j++)
+        {
+            pushM(j, i, m, arr, pArr);
+        }
+    }
+    mu_assert("0 3 == 3", 3 == popM(0, m, arr, pArr));
+    mu_assert("1 3 == 3", 3 == popM(1, m, arr, pArr));
+    mu_assert("2 3 == 3", 3 == popM(2, m, arr, pArr));
+    mu_assert("3 3 == 3", 3 == popM(3, m, arr, pArr));
+    mu_assert("4 3 == 3", 3 == popM(4, m, arr, pArr));
+    mu_assert("0 2 == 3", 2 == popM(0, m, arr, pArr));
+    mu_assert("1 2 == 3", 2 == popM(1, m, arr, pArr));
+    mu_assert("2 2 == 3", 2 == popM(2, m, arr, pArr));
+    mu_assert("3 2 == 3", 2 == popM(3, m, arr, pArr));
+    mu_assert("4 2 == 3", 2 == popM(4, m, arr, pArr));
+    return 0;
+}
+
 int pushFront14(int data, int *fP, int *bP, int *dSt)
 {
     if (*fP == *bP)
@@ -433,6 +492,7 @@ static char *problem14()
 
 static char *problem12()
 {
+    //actually problem 14
     int n = 5;
     int arr[5] = {0, 1, 2, 3, 4};
     int st1[5];
@@ -614,6 +674,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem15);
     mu_run_test(problem14);
     mu_run_test(problem12);
     mu_run_test(problem11);
