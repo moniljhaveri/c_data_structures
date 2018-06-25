@@ -404,6 +404,70 @@ int popM(int ind, int m, int *st, int *pArr)
     return data;
 }
 
+void createBranchList(node **head, node **end, int position)
+{
+    node *endNode = *end;
+    node *curr = *head;
+    int count = 0;
+    while (endNode->next)
+    {
+        endNode = endNode->next;
+    }
+    while (position != count)
+    {
+        curr = curr->next;
+        count++;
+    }
+    endNode->next = curr;
+}
+
+int stackInt(int n, node *head, node *sH)
+{
+    node *st[n];
+    int i = -1;
+    node *curr = sH;
+    while (head)
+    {
+        i++;
+        st[i] = head;
+        head = head->next;
+    }
+    int d = i;
+    while (curr)
+    {
+        i = d;
+        while (i)
+        {
+            if (curr == st[i])
+            {
+                return curr->data;
+            }
+            --i;
+        }
+        curr = curr->next;
+    }
+    return -1;
+}
+
+static char *problem21()
+{
+    node *head = createNode(1);
+    addBeginning(2, &head);
+    addBeginning(3, &head);
+    addBeginning(4, &head);
+    addBeginning(5, &head);
+    node *shortHead = createNode(10);
+    addBeginning(20, &shortHead);
+    addBeginning(30, &shortHead);
+    addBeginning(40, &shortHead);
+    createBranchList(&head, &shortHead, 2);
+    int *st[5];
+    int i = 0;
+    mu_assert("3 != 3", 3 == stackInt(5, head, shortHead));
+
+    return 0;
+}
+
 static char *problem15()
 {
     int n = 5;
@@ -674,6 +738,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem21);
     mu_run_test(problem15);
     mu_run_test(problem14);
     mu_run_test(problem12);
