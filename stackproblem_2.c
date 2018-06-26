@@ -449,6 +449,41 @@ int stackInt(int n, node *head, node *sH)
     return -1;
 }
 
+int stackIntV2(int n, int m, node *h1, node *h2)
+{
+    node *st1[n];
+    node *st2[m];
+    int i = -1;
+    int j = -1;
+    while (h1)
+    {
+        i++;
+        st1[i] = h1;
+        h1 = h1->next;
+    }
+
+    while (h2)
+    {
+        j++;
+        st2[j] = h2;
+        h2 = h2->next;
+    }
+    int t = i < j ? j : i;
+    node *prev = NULL;
+    while (t)
+    {
+        if (st1[i] != st2[j])
+        {
+            return prev->data;
+        }
+        prev = st1[i];
+        --i;
+        --j;
+        --t;
+    }
+    return -1;
+}
+
 static char *problem21()
 {
     node *head = createNode(1);
@@ -463,7 +498,8 @@ static char *problem21()
     createBranchList(&head, &shortHead, 2);
     int *st[5];
     int i = 0;
-    mu_assert("3 != 3", 3 == stackInt(5, head, shortHead));
+    mu_assert("V1 3 != 3", 3 == stackInt(5, head, shortHead));
+    mu_assert("V2 3 != 3", 3 == stackIntV2(10, 10, head, shortHead));
 
     return 0;
 }
