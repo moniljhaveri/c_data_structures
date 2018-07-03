@@ -484,6 +484,46 @@ int stackIntV2(int n, int m, node *h1, node *h2)
     return -1;
 }
 
+int findSpan(int n, int m, int *arr)
+{
+
+    int span = 1;
+    int st[n];
+    int i = -1;
+    for (int j = 0; j < m; ++j)
+    {
+        i++;
+        st[i] = arr[j];
+    }
+    while (i > 0)
+    {
+        if (arr[i] < arr[m])
+        {
+            span++;
+        }
+        else
+        {
+            return span;
+        }
+        i--;
+    }
+
+    return span;
+}
+
+static char *problem22()
+{
+    //works for 22 and 23
+    int arr[6] = {6, 3, 4, 5, 2, 3};
+    mu_assert("m = 0 1 != 1", 1 == findSpan(6, 0, arr));
+    mu_assert("m = 1 1 != 1", 1 == findSpan(6, 1, arr));
+    mu_assert("m = 2 2 != 2", 2 == findSpan(6, 2, arr));
+    mu_assert("m = 3 3 != 1", 3 == findSpan(6, 3, arr));
+    mu_assert("m = 4 1 != 1", 1 == findSpan(6, 4, arr));
+    mu_assert("m = 5 2 != 2", 2 == findSpan(6, 5, arr));
+    return 0;
+}
+
 static char *problem21()
 {
     node *head = createNode(1);
@@ -774,6 +814,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem22);
     mu_run_test(problem21);
     mu_run_test(problem15);
     mu_run_test(problem14);
