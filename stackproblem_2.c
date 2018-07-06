@@ -511,6 +511,47 @@ int findSpan(int n, int m, int *arr)
     return span;
 }
 
+void onePassSpan(int n, int *arr, int *ans)
+{
+    int st[n];
+    int top = -1;
+    int p = -1;
+    for (int i = 0; i < n; ++i)
+    {
+        while ((-1 < top) && arr[i] > arr[st[top]])
+        {
+            top--;
+            ++p;
+        }
+        if (-1 == top)
+        {
+            p = -1;
+        }
+        else
+        {
+            p = st[top];
+        }
+        ++top;
+        st[top] = i;
+        ans[i] = i - p;
+    }
+}
+
+static char *problem23()
+{
+    int arr[6] = {6, 3, 4, 5, 2, 3};
+    int *ans = (int *)malloc(sizeof(int) * 6);
+    onePassSpan(6, arr, ans);
+    mu_assert("m = 0 1 != 1", 1 == ans[0]);
+    mu_assert("m = 1 1 != 1", 1 == ans[1]);
+    mu_assert("m = 2 2 != 2", 2 == ans[2]);
+    mu_assert("m = 3 3 != 1", 3 == ans[3]);
+    mu_assert("m = 4 1 != 1", 1 == ans[4]);
+    mu_assert("m = 5 2 != 2", 2 == ans[5]);
+
+    return 0;
+}
+
 static char *problem22()
 {
     //works for 22 and 23
@@ -814,6 +855,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem23);
     mu_run_test(problem22);
     mu_run_test(problem21);
     mu_run_test(problem15);
