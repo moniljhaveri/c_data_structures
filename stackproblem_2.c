@@ -537,6 +537,44 @@ void onePassSpan(int n, int *arr, int *ans)
     }
 }
 
+int largestRectangle(int n, int *arr)
+{
+    int st[n];
+    int p = -1;
+    int maxArea = 0;
+    for (int i = 0; i < n; ++i)
+    {
+        p++;
+        st[p] = arr[i];
+        int j = p;
+        int tmpArea = 0;
+        int width = 1;
+        int min = arr[i];
+        while (j > -1)
+        {
+            if (min > arr[j])
+            {
+                min = arr[j];
+            }
+            tmpArea = min * width;
+            if (tmpArea > maxArea)
+            {
+                maxArea = tmpArea;
+            }
+            --j;
+            width++;
+        }
+    }
+    return maxArea;
+}
+
+static char *problem24()
+{
+    int arr[7] = {3, 2, 5, 6, 1, 4, 4};
+    mu_assert("area != 10", 10 == largestRectangle(7, arr));
+    return 0;
+}
+
 static char *problem23()
 {
     int arr[6] = {6, 3, 4, 5, 2, 3};
@@ -855,6 +893,7 @@ static char *problem1()
 }
 static char *run_problem_tests()
 {
+    mu_run_test(problem24);
     mu_run_test(problem23);
     mu_run_test(problem22);
     mu_run_test(problem21);
